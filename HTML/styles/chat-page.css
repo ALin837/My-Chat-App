@@ -37,9 +37,10 @@ body {
     width: 100%;
     background-color: rgb(224, 192, 192);
     font-weight: 500;
-    font-size: 3rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    font-size: 5vh;
+    box-sizing: border-box;
+    padding-top: 1.3vh;
+    height: 7vh;
 
 }
 .title {
@@ -50,11 +51,15 @@ body {
 .chat-portion {
     display: grid;
     grid-template-columns: 1fr 5fr;
+    box-sizing: border-box;
+    height: 93vh;
 
 }
 
 .side-bar {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(206, 168, 168);
+    height: 93vh;
+
 }
 .user-title {
     display: flex;
@@ -62,20 +67,18 @@ body {
     margin: 1rem;
     font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 500;
-    font-size: 2.2rem;
+    font-size: 4vh;
 
 }
-
-
 .user-list {
     background-color: rgb(205, 214, 214);
+    height: 80%;
     overflow-y: auto;
-
 }
 .user {
     display: flex;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 1.7vh;
     font-weight: 600;
     margin: 1rem;
 }
@@ -91,7 +94,17 @@ body {
     margin: 1rem;
     font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 500;
-    font-size: 2.2rem;
+    font-size: 4.5vh;
+}
 
+.Chat-Display {
+    height: 93vh;
+}
+
+.message-container {
+    border: 1px solid black;
+    margin: 0px 2rem;
+    height: 80%;
+    overflow-y: auto;
 }
 
