@@ -5,22 +5,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat App</title>
+    <title>Chatter</title>
     <link rel="stylesheet" href="styles/chat-page.css">
+    <script src="https://kit.fontawesome.com/71c6f26d48.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div class="root">
         <section class="top-bar">
             <div class="title">
-                Talk to People!
+                <i class="fa-solid fa-comment"></i>
+                My-Chat-App
             </div>
         </section>
         <div class="chat-portion">
             <div class="side-bar">
                 <div class="user-title">
+                    <i class="fa-solid fa-users" id="user-icon"></i>
                     Users:
                 </div>
+                <div class="divider"></div>
                 <div class="user-list">
                     <div class="user">
                         Andrew
@@ -43,65 +47,47 @@
                             Andrew
                         </div>
                         <div class="messenge-box">
-                            Hello World
+                            hello World
                         </div>
                     </div>
+                    <div class="message">
+                        <div class="messenger">
+                            Mark
+                        </div>
+                        <div class="messenge-box">
+                            Check out what i can say you fucking losers
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Assumenda itaque beatae at
+                            Check out what i can say you fucking losers
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Assumenda itaque beatae at
+                            Check out what i can say you fucking losers
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            Assumenda itaque beatae at
+
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="messenger">
+                            Brain
+                        </div>
+                        <div class="messenge-box">
+                            You guys are all fucking stupid
+                        </div>
+                    </div>
+
+
                 </div>
-
-
+                <div class="input-form">
+                    <form id="chat-form">
+                        <input type="text" id="message-form" name="message-form" placeholder="Aa">
+                        <input type="submit" id="Submit-message" value="Send">
+                    </form>
+                </div>
             </div>
-
         </div>
 
     </div>
 </body>
 
 </html>
-
-
-<!--
-            <section class="chat-section">
-            <div class="Chat-Big-title">
-                <h2>
-                    Chat with People
-                </h2>
-            </div>
-
-            <section class="Chat Name">
-                <h2>
-                    Chat name: Super cool chat for cool kids
-                </h2>
-            </section>
-
-            <section class="Users">
-                <h2>Users</h2>
-                <ul>
-                    <li>
-                        Andrew
-                    </li>
-                    <li>
-                        Mark
-                    </li>
-                </ul>
-            </section>
-
-            <div class="Chat-section">
-                <h2>Talking in Real Time!</h2>
-            </div>
-
-            <div class="Form-section">
-                <form action="">
-                    <label for="chat">Chat:</label><br>
-                    <input type="text" id="chat" name="chat" placeholder="Sent a message"><br>
-                    <input type="submit" value="Submit"><br>
-                </form>
-                
-            </div>
-
-            <div class="Quit-section">
-                <form action="index.html">
-                    <input type="submit" value="Quit">
-                </form>
-            </div>
-        </section>
--->

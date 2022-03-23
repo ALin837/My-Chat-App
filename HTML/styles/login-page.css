@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
 #home-login {
-    background: linear-gradient(#e66465, #9198e5);
+    background: linear-gradient(#ec8c8c, #9fa4e0);
 }
 #home-page {
     height:100vh;
@@ -39,7 +39,7 @@ input[type=text] {
     box-sizing: border-box;
 }
 
-  input[type=submit] {
+input[type=submit] {
     width: 100%;
     background-color: #af69af;
     color: white;

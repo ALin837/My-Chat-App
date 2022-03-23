@@ -7,6 +7,11 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.divider {
+    background-color: rgb(190, 181, 181);
+    height: 2px;
+    margin: 0px 40px;
+}
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -29,18 +34,20 @@ body {
   }
 
 .root {
+    background: linear-gradient(#ec8c8c, #9fa4e0);
     height: 100vh;
 }
 
 .top-bar {
+    display: flex;
+    justify-content: center;
     font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     width: 100%;
-    background-color: rgb(224, 192, 192);
     font-weight: 500;
     font-size: 5vh;
     box-sizing: border-box;
     padding-top: 1.3vh;
-    height: 7vh;
+    height: 8vh;
 
 }
 .title {
@@ -50,28 +57,34 @@ body {
 
 .chat-portion {
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 7fr;
     box-sizing: border-box;
-    height: 93vh;
+    height: 92vh;
 
 }
 
 .side-bar {
-    background-color: rgb(206, 168, 168);
-    height: 93vh;
+    margin: 1rem;
+    background-color: white;
+    border-radius: 15px;
+    height: 71.7vh;
 
+}
+
+#user-icon {
+    margin-right: 0.5rem;
 }
 .user-title {
     display: flex;
     justify-content: center;
     margin: 1rem;
+    margin-top: 1.5rem;
     font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 4vh;
 
 }
 .user-list {
-    background-color: rgb(205, 214, 214);
     height: 80%;
     overflow-y: auto;
 }
@@ -79,9 +92,22 @@ body {
     display: flex;
     justify-content: center;
     font-size: 1.7vh;
-    font-weight: 600;
+    font-weight: 500;
     margin: 1rem;
 }
+/*
+.user-info {
+    display: flex;
+}
+
+.time {
+    margin-left: 0.5rem;
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+
+}
+*/
 
 .Content {
     background-color: rgb(70, 104, 104);
@@ -89,22 +115,82 @@ body {
 }
 
 .Content-Name {
+    background-color: white;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
-    margin: 1rem;
+    margin: 1rem 2rem;
+    padding: 5px;
     font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 500;
     font-size: 4.5vh;
 }
 
 .Chat-Display {
-    height: 93vh;
+    height: 92vh;
 }
 
 .message-container {
-    border: 1px solid black;
+    background-color: white;
     margin: 0px 2rem;
-    height: 80%;
+    height: 70%;
     overflow-y: auto;
+    border-radius: 15px;
+}
+
+.message {
+    margin: 1.2rem 3rem;
+}
+.messenger {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.messenge-box {
+    display: flex;
+    background-color: #9037a1;
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    
+    border-radius: 15px;
+    display: flex;
+    width: 100%;
+}
+
+.input-form {
+    margin:2rem 2rem;
+}
+
+#chat-form {
+    display: flex;
+}
+
+#message-form {
+    width: 90%;
+    border-radius: 15px;
+    font-size: 1rem;
+    padding: 13px 16px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+}
+
+
+#Submit-message {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #af69af;
+    width:10%;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500; 
+    border-radius: 10px; 
+    cursor: pointer;
+    border: none;
+    outline:none;
+}
+
+#Submit-message:hover {
+    background-color: #7e2e7e;
 }
 
