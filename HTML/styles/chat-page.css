@@ -60,7 +60,16 @@ body {
     grid-template-columns: 1fr 7fr;
     box-sizing: border-box;
     height: 92vh;
+}
 
+/*Short term fix make side bar disappear on Mobile*/
+@media only screen and (max-width:480px) {
+    .side-bar {
+        display: none;
+    }
+    .Chat-Display {
+        width:100vw;
+    }
 }
 
 .side-bar {
@@ -68,7 +77,6 @@ body {
     background-color: white;
     border-radius: 15px;
     height: 71.7vh;
-
 }
 
 #user-icon {
@@ -82,7 +90,6 @@ body {
     font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 400;
     font-size: 4vh;
-
 }
 .user-list {
     height: 80%;
@@ -95,23 +102,14 @@ body {
     font-weight: 500;
     margin: 1rem;
 }
-/*
-.user-info {
-    display: flex;
-}
-
-.time {
-    margin-left: 0.5rem;
-    margin-bottom: 0.3rem;
-    font-size: 1rem;
-    font-weight: 600;
-
-}
-*/
 
 .Content {
     background-color: rgb(70, 104, 104);
     display: flex;
+}
+
+.Chat-Display {
+    height: 92vh;
 }
 
 .Content-Name {
@@ -126,10 +124,6 @@ body {
     font-size: 4.5vh;
 }
 
-.Chat-Display {
-    height: 92vh;
-}
-
 .message-container {
     background-color: white;
     margin: 0px 2rem;
@@ -138,27 +132,34 @@ body {
     border-radius: 15px;
 }
 
+/*Other user messages*/
 .message {
-    margin: 1.2rem 3rem;
+    margin: 1rem 3rem;
 }
 .messenger {
-    margin-bottom: 0.5rem;
     font-size: 1.2rem;
     font-weight: 600;
 }
 .messenge-box {
     display: flex;
-    background-color: #9037a1;
+    /*color for your own message is purple*/
+    /*font color for your own message is white*/
     color: white;
-    font-size: 1rem;
-    font-weight: 400;
-    padding: 0.5rem 1rem;
-    
-    border-radius: 15px;
-    display: flex;
-    width: 100%;
+    color: black;
+    width: auto;
 }
 
+.message-content {
+    margin: 0.5rem 0rem;
+    border-radius: 15px;
+    padding: 0.5rem 1rem;
+    font-weight: 400;
+    font-size: 1rem;
+    background-color: #e8e6e9; 
+}
+
+
+/*Input Text*/
 .input-form {
     margin:2rem 2rem;
 }
@@ -180,7 +181,7 @@ body {
 #Submit-message {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #af69af;
-    width:10%;
+    width:9%;
     color: white;
     font-size: 1rem;
     font-weight: 500; 
@@ -194,3 +195,39 @@ body {
     background-color: #7e2e7e;
 }
 
+
+/*Your messages*/
+.user-message {
+    margin: 1rem 3rem;
+}
+.user-messenger {
+    display: flex;
+    align-items: flex-end;
+    justify-content: right;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.user-messenge-box {
+    display: flex;
+    justify-content: right;
+    flex-direction: row-reverse;
+    /*color for your own message is purple*/
+    /*color for your own message is purple*/
+    /*font color for your own message is white*/
+    color: white;
+    width: auto;
+}
+
+.user-message-content {
+    margin: 0.5rem 0rem;
+    border-radius: 15px;
+    padding: 0.5rem 1rem;
+    font-weight: 400;
+    font-size: 1rem; 
+    background-color: #9037a1;
+}
+
+span {
+    color: #555;
+    font-weight: 400;
+}
