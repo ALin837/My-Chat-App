@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+.root {
+    height: 100vh;
+}
+
+.top-bar {
+    font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 100%;
+    background-color: rgb(224, 192, 192);
+    font-weight: 500;
+    font-size: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+}
+.title {
+    margin-right: auto;
+    margin-left: 2rem;
+}
+
+.chat-portion {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+
+}
+
+.side-bar {
+    background-color: rgb(255, 255, 255);
+}
+.user-title {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 2.2rem;
+
+}
+
+
+.user-list {
+    background-color: rgb(205, 214, 214);
+    overflow-y: auto;
+
+}
+.user {
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1rem;
+}
+
+.Content {
+    background-color: rgb(70, 104, 104);
+    display: flex;
+}
+
+.Content-Name {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 2.2rem;
+
+}
+
