@@ -129,7 +129,7 @@ a {
     font-size: 4.5vh;
 }
 
-.message-container {
+#message-container {
     background-color: white;
     margin: 0px 2rem;
     height: 70%;
@@ -163,6 +163,11 @@ a {
     background-color: #e8e6e9; 
 }
 
+/*disconnect*/
+.disconnect-message {
+    display: flex;
+    justify-content: center;
+}
 
 /*Input Text*/
 .input-form {
