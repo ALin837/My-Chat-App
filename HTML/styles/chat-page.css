@@ -13,6 +13,11 @@ body {
     margin: 0px 40px;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
   }
@@ -166,29 +171,35 @@ body {
 
 #chat-form {
     display: flex;
+    width: 100%;
 }
 
 #message-form {
     width: 90%;
+    font-family: Arial, Helvetica, sans-serif;
     border-radius: 15px;
     font-size: 1rem;
     padding: 13px 16px;
-    margin: 8px 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 1rem;
     border: 1px solid #ccc;
+    outline:none;
 }
 
 
 #Submit-message {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #af69af;
-    width:9%;
+    box-sizing: border-box;
+    width: 10%;
     color: white;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 500; 
     border-radius: 10px; 
+    padding: 5px 15px;
     cursor: pointer;
     border: none;
-    outline:none;
 }
 
 #Submit-message:hover {
