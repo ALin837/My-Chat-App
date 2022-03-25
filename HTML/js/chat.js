@@ -19,6 +19,10 @@ function parseURLParam(Parameter) {
         }
     }
 }
+socket.on('My Error', response => {
+    window.alert(response);
+    window.location.href = 'index.html'
+})
 
 function wrap() {
     const Room_banner = document.getElementById('Content-Name');

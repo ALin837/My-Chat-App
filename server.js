@@ -4,7 +4,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const app = express(); // initializes an express server
 const port =  process.env.PORT || 3000;
-const {createAndAddUser, getUser, deleteUser, getUsers} = require('./utils/users')
+const {createAndAddUser, getUser, deleteUser, getUsers, containUser} = require('./utils/users')
 const server = http.createServer(app);
 const io = socketio(server);
 
@@ -16,15 +16,19 @@ app.use(express.static(path.join(__dirname,'HTML')));
 io.on('connection', (socket) => {
     socket.on('joinRoom', ({username, roomname}) => {
         //create a user and push the user onto the stack.
-        const user = createAndAddUser(username, socket.id, roomname);
-        //send welcome information
-        socket.join(user.roomname);
-        socket.emit('welcome', {name: "My-Chat-App Bot", message: 'Welcome to the chat room!'})
-        socket.broadcast.to(user.roomname).emit('join-message', user.username)
-
-       //Send room information
-        const userlist = getUsers(user.roomname);
-        io.to(user.roomname).emit('new-user', userlist)
+        if (containUser(roomname, username)) {
+            socket.emit('My Error', 'The username has already been taken')
+        } else {
+            const user = createAndAddUser(username, socket.id, roomname);
+            //send welcome information
+            socket.join(user.roomname);
+            socket.emit('welcome', {name: "My-Chat-App Bot", message: 'Welcome to the chat room!'})
+            socket.broadcast.to(user.roomname).emit('join-message', user.username)
+    
+           //Send room information
+            const userlist = getUsers(user.roomname);
+            io.to(user.roomname).emit('new-user', userlist)
+        }
 
     });
 

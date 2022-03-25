@@ -29,9 +29,17 @@ function getUsers(room) {
     return users.filter(user => user.roomname === room);
 }
 
+//returns true or false if a username is in a roomname
+function containUser(roomname, username) {
+    const userlist = users.filter(user => (user.roomname == roomname) && (user.username == username))
+
+    return (userlist.length != 0);
+}
+
 module.exports = {
     createAndAddUser,
     getUser,
     deleteUser,
-    getUsers
+    getUsers,
+    containUser
 };
