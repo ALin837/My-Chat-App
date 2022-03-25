@@ -4,6 +4,7 @@ const messageInput = document.getElementById('message-form');
 const send = document.getElementById('Submit-message');
 const roomname = parseURLParam("Roomname")
 const username = parseURLParam("Username")
+const userlist = document.getElementById("user-list")
 
 /* get current location */
 // Gets the Parameters
@@ -22,7 +23,10 @@ function parseURLParam(Parameter) {
 function wrap() {
     const Room_banner = document.getElementById('Content-Name');
     Room_banner.textContent = roomname;
-    addUserToList(username);
+    const div = document.createElement("div");
+    div.classList.add("user");
+    div.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;
+    userlist.appendChild(div);
     socket.emit('joinRoom', {username, roomname});
 }
 wrap();
@@ -37,9 +41,14 @@ socket.on('join-message', response => {
 
 /*users not being updated in real time*/
 socket.on('new-user', response => {
-    console.log(response);
+    //iterates through the user list
+    userlist.innerHTML = `<div class="user"> 
+    <i class="fa-solid fa-user"></i>${username}
+    </div>`
     for (let i = 0; i < response.length; i++) {
-        addUserToList(response[i].username)
+        if (response[i].username !== username) {
+            addUserToList(response[i].username)
+        }
     }
 })
 
@@ -75,14 +84,9 @@ document.addEventListener('keypress', e => {
 
 //Add users to user list
 function addUserToList(name) {
-    const userlist = document.getElementById("user-list")
     const div = document.createElement("div");
     div.classList.add("user");
-    if (name == username) {
-        div.innerHTML = `<i class="fa-solid fa-user"></i> ${name}`;
-    } else {
-        div.innerHTML = `${name}`;
-    }
+    div.innerHTML = `${name}`;
     userlist.appendChild(div);
     
 }
@@ -152,9 +156,10 @@ function DisplayMessage(message, name) {
     display.scrollTop = display.scrollHeight
 }
 
-/*automatically updates scroll*/
+/*automatically updates scroll
 function updateScroll(){
     display.scrollTop = display.scrollHeight;
 }
 setInterval(updateScroll,1000);
+*/
 

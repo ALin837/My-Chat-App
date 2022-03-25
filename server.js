@@ -22,29 +22,27 @@ io.on('connection', (socket) => {
         socket.emit('welcome', {name: "My-Chat-App Bot", message: 'Welcome to the chat room!'})
         socket.broadcast.to(user.roomname).emit('join-message', user.username)
 
-        //send room information
-        /*users not being updated in real time*/
+       //Send room information
         const userlist = getUsers(user.roomname);
-        let users;
-        const index = userlist.findIndex(item => item.username === user.username);
-        if (index !== -1) {
-            users = userlist.splice(index, 1);
-        }
-        socket.emit('new-user', userlist)
+        io.to(user.roomname).emit('new-user', userlist)
 
     });
 
 
     socket.on('chat message', (message) => {
         const user = getUser(socket.id);
-        socket.broadcast.to(user.roomname).emit('message', message);
+        if (user) {
+            socket.broadcast.to(user.roomname).emit('message', message);
+        }
     })
     
    socket.on('disconnect', () => {
        const user = deleteUser(socket.id);
        if (user) {
+           const userlist = getUsers(user.roomname);
            io.to(user.roomname).emit('disconnection', user.username);
-       }
+           io.to(user.roomname).emit('new-user', userlist)
+        }
    })
 })
 
