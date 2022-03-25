@@ -18,11 +18,13 @@ function deleteUser(id) {
         return;
     }
     const index = users.findIndex(item => item.id === id);
-    users.splice(index, 1);
+    if (index !== -1) {
+        return users.splice(index, 1)[0];
+    }
 }
 
-function getUsers() {
-    return users;
+function getUsers(room) {
+    return users.filter(user => user.roomname === room);
 }
 
 module.exports = {

@@ -10,9 +10,7 @@ const username = parseURLParam("Username")
 
 function parseURLParam(Parameter) {
     var FullURL = window.location.search.substring(1);
-    console.log(FullURL);
     var ParamArr = FullURL.split('&');
-    console.log(ParamArr);
     for (var i = 0; i < ParamArr.length; i++) {
         var currentParam = ParamArr[i].split('=');
         if (currentParam[0] == Parameter) {
@@ -28,20 +26,20 @@ function wrap() {
 }
 wrap();
 
-socket.on('welcome', message => {
-    DisplayMessage(message, "My-Chat-App Bot")
+socket.on('welcome', response => {
+    DisplayMessage(response.message, response.name)
 })
 
-socket.on('join-message', message => {
-    joinMessage(message, "My-Chat-App Bot")
+socket.on('join-message', response => {
+    joinMessage(response)
 })
 
-socket.on('disconnect', message => {
-    disconnectMessage(message, "user")
+socket.on('disconnection', user => {
+    disconnectMessage(user)
 })
 
-socket.on('message', message => {
-    DisplayMessage(message.message, message.name)
+socket.on('message', Obj => {
+    DisplayMessage(Obj.message, Obj.name)
 })
 
 
@@ -86,25 +84,25 @@ function userDisplayMessage(message, name) {
 }
 
 
-function disconnectMessage(message, name) {
+function disconnectMessage(name) {
     const d = new Date();
     const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     const div = document.createElement("div");
     div.classList.add("disconnect-message");
     div.innerHTML = `<p class="disconnect-content">
-            ${name} has left &nbsp;<span>${event}</span>
+            ${name} has left the chat&nbsp;<span>${event}</span>
                 </p>`
     display.appendChild(div);
     display.scrollTop = display.scrollHeight
 }
 
-function joinMessage(message, name) {
+function joinMessage(name) {
     const d = new Date();
     const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     const div = document.createElement("div");
     div.classList.add("disconnect-message");
     div.innerHTML = `<p class="disconnect-content">
-            ${message}&nbsp;<span>${event}</span>
+            ${name} has joined the chat&nbsp;<span>${event}</span>
                 </p>`
     display.appendChild(div);
     display.scrollTop = display.scrollHeight

@@ -18,8 +18,8 @@ io.on('connection', (socket) => {
         //create a user and push the user onto the stack.
         const user = createAndAddUser(username, socket.id, roomname);
         socket.join(user.roomname);
-        socket.emit('welcome', 'Welcome to the chat room!')
-        socket.broadcast.to(user.roomname).emit('join-message', `${user.username} has joined the chat`)
+        socket.emit('welcome', {name: "My-Chat-App Bot", message: 'Welcome to the chat room!'})
+        socket.broadcast.to(user.roomname).emit('join-message', user.username)
     });
 
 
@@ -29,10 +29,9 @@ io.on('connection', (socket) => {
     })
     
    socket.on('disconnect', () => {
-       const user = getUser(socket.id);
-       const name = user.username;
-       deleteUser(socket.id);
-       socket.emit('diconnect', `${name} has left the chat`)
+       const user = deleteUser(socket.id);
+       console.log(user);
+       io.to(user.roomname).emit('disconnection', user.username);
    })
 })
 
