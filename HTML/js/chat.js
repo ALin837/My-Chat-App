@@ -22,6 +22,7 @@ function parseURLParam(Parameter) {
 function wrap() {
     const Room_banner = document.getElementById('Content-Name');
     Room_banner.textContent = roomname;
+    addUserToList(username);
     socket.emit('joinRoom', {username, roomname});
 }
 wrap();
@@ -34,6 +35,14 @@ socket.on('join-message', response => {
     joinMessage(response)
 })
 
+/*users not being updated in real time*/
+socket.on('new-user', response => {
+    console.log(response);
+    for (let i = 0; i < response.length; i++) {
+        addUserToList(response[i].username)
+    }
+})
+
 socket.on('disconnection', user => {
     disconnectMessage(user)
 })
@@ -41,6 +50,7 @@ socket.on('disconnection', user => {
 socket.on('message', Obj => {
     DisplayMessage(Obj.message, Obj.name)
 })
+
 
 
 /* Event listeners for clicks and enter*/
@@ -61,6 +71,21 @@ document.addEventListener('keypress', e => {
     }
 })
 
+
+
+//Add users to user list
+function addUserToList(name) {
+    const userlist = document.getElementById("user-list")
+    const div = document.createElement("div");
+    div.classList.add("user");
+    if (name == username) {
+        div.innerHTML = `<i class="fa-solid fa-user"></i> ${name}`;
+    } else {
+        div.innerHTML = `${name}`;
+    }
+    userlist.appendChild(div);
+    
+}
 
 // When 'you' the user sends a message
 function userDisplayMessage(message, name) {

@@ -17,9 +17,21 @@ io.on('connection', (socket) => {
     socket.on('joinRoom', ({username, roomname}) => {
         //create a user and push the user onto the stack.
         const user = createAndAddUser(username, socket.id, roomname);
+        //send welcome information
         socket.join(user.roomname);
         socket.emit('welcome', {name: "My-Chat-App Bot", message: 'Welcome to the chat room!'})
         socket.broadcast.to(user.roomname).emit('join-message', user.username)
+
+        //send room information
+        /*users not being updated in real time*/
+        const userlist = getUsers(user.roomname);
+        let users;
+        const index = userlist.findIndex(item => item.username === user.username);
+        if (index !== -1) {
+            users = userlist.splice(index, 1);
+        }
+        socket.emit('new-user', userlist)
+
     });
 
 
@@ -30,8 +42,9 @@ io.on('connection', (socket) => {
     
    socket.on('disconnect', () => {
        const user = deleteUser(socket.id);
-       console.log(user);
-       io.to(user.roomname).emit('disconnection', user.username);
+       if (user) {
+           io.to(user.roomname).emit('disconnection', user.username);
+       }
    })
 })
 
