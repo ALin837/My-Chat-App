@@ -117,7 +117,7 @@ a {
     height: 92vh;
 }
 
-.Content-Name {
+#Content-Name {
     background-color: white;
     border-radius: 15px;
     display: flex;
