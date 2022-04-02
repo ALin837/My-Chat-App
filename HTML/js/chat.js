@@ -25,8 +25,8 @@ socket.on('My Error', response => {
 })
 
 function wrap() {
-    const Room_banner = document.getElementById('Content-Name');
-    Room_banner.textContent = roomname;
+    const Room_banner = document.querySelectorAll('#Content-Name h2');
+    Room_banner[0].textContent = roomname;
     const div = document.createElement("div");
     div.classList.add("user");
     div.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;

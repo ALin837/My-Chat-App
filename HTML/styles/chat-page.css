@@ -1,16 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-.divider {
-    background-color: rgb(190, 181, 181);
-    height: 2px;
-    margin: 0px 40px;
 }
 
 a {
@@ -20,33 +16,34 @@ a {
 
 ::-webkit-scrollbar {
     width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
     border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
 .root {
-    background: linear-gradient(#ec8c8c, #9fa4e0);
+
     height: 100vh;
 }
 
+/*
 .top-bar {
     display: flex;
     justify-content: center;
-    font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     width: 100%;
     font-weight: 500;
     font-size: 5vh;
@@ -55,16 +52,18 @@ a {
     height: 8vh;
 
 }
+
 .title {
     margin-right: auto;
     margin-left: 2rem;
 }
+*/
 
 .chat-portion {
+    height: 100%;
     display: grid;
-    grid-template-columns: 1fr 7fr;
+    grid-template-columns: 10% 90%;
     box-sizing: border-box;
-    height: 92vh;
 }
 
 /*Short term fix make side bar disappear on Mobile*/
@@ -72,34 +71,43 @@ a {
     .side-bar {
         display: none;
     }
+
     .Chat-Display {
-        width:100vw;
+        width: 100vw;
     }
 }
 
 .side-bar {
-    margin: 1rem;
+    box-sizing: border-box;
     background-color: white;
-    border-radius: 15px;
-    height: 71.7vh;
+    height: 100%;
+    border-right: 1px solid rgba(0, 0, 0, .125);
+
 }
 
 #user-icon {
     margin-right: 0.5rem;
 }
+
 .user-title {
     display: flex;
     justify-content: center;
-    margin: 1rem;
-    margin-top: 1.5rem;
-    font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    align-items: center;
+    box-sizing: border-box;
+    height: 9%;
+    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 400;
-    font-size: 4vh;
+    font-size: 2rem;
+
 }
+
 #user-list {
-    height: 80%;
+    box-sizing: border-box;
+    height: 81%;
     overflow-y: auto;
+    overflow-x: hidden;
 }
+
 .user {
     display: flex;
     justify-content: center;
@@ -119,25 +127,34 @@ a {
 }
 
 .Chat-Display {
-    height: 92vh;
+    height: 100%;
+}
+
+.chat-container {
+    height: 90%;
+}
+
+h2 {
+    font-size: 2rem;
 }
 
 #Content-Name {
+    width: 100%;
     background-color: white;
-    border-radius: 15px;
+    box-sizing: border-box;
+    height: 10%;
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin: 1rem 2rem;
-    padding: 5px;
-    font-family: 'Yanone Kaffeesatz','Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 500;
-    font-size: 4.5vh;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 0.25rem;
 }
 
 #message-container {
     background-color: white;
-    margin: 0px 2rem;
-    height: 70%;
+    height: 90%;
     overflow-y: auto;
     border-radius: 15px;
 }
@@ -146,10 +163,12 @@ a {
 .message {
     margin: 1rem 3rem;
 }
+
 .messenger {
     font-size: 1.2rem;
     font-weight: 600;
 }
+
 .messenge-box {
     display: flex;
     /*color for your own message is purple*/
@@ -165,7 +184,7 @@ a {
     padding: 0.5rem 1rem;
     font-weight: 400;
     font-size: 1rem;
-    background-color: #e8e6e9; 
+    background-color: #e8e6e9;
 }
 
 /*disconnect*/
@@ -175,56 +194,63 @@ a {
 }
 
 /*Input Text*/
+
+.input-area {
+    box-sizing: border-box;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(0, 0, 0, .125);
+}
+
 .input-form {
-    margin:2rem 2rem;
+    box-sizing: border-box;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #chat-form {
-    display: flex;
+    display: grid;
+    grid-template-columns: 90% 10%;
+    column-gap: 1%;
     width: 100%;
+    align-items: center;
 }
 
 #message-form {
-    width: 90%;
+    box-sizing: border-box;
+    height: 70%;
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 15px;
-    font-size: 1rem;
+    font-size: 100%;
     padding: 13px 16px;
     margin-top: 8px;
     margin-bottom: 8px;
-    margin-right: 1rem;
     border: 1px solid #ccc;
-    outline:none;
+    outline: none;
 }
 
 
 #Submit-message {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #af69af;
+    background-color: #9037a1;
     box-sizing: border-box;
-    width: 10%;
+    height: 70%;
     color: white;
-    font-size: 1.5vh;
-    font-weight: 500; 
-    border-radius: 10px; 
-    padding: 5px 15px;
+    font-size: 100%;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 5px 10px;
     cursor: pointer;
     border: none;
 }
 
-@media only screen and (max-width:800px) {
-    
-    #message-form {
-        width: 70%;
-    }
-    #Submit-message {
-        width: 20%;
-        font-size: 1.5vh;
-    } 
-}
-
 #Submit-message:hover {
-    background-color: #7e2e7e;
+    background-color: #62286e;
 }
 
 
@@ -232,6 +258,7 @@ a {
 .user-message {
     margin: 1rem 3rem;
 }
+
 .user-messenger {
     display: flex;
     align-items: flex-end;
@@ -239,6 +266,7 @@ a {
     font-size: 1.2rem;
     font-weight: 600;
 }
+
 .user-messenge-box {
     display: flex;
     justify-content: right;
@@ -255,11 +283,23 @@ a {
     border-radius: 15px;
     padding: 0.5rem 1rem;
     font-weight: 400;
-    font-size: 1rem; 
+    font-size: 1rem;
     background-color: #9037a1;
 }
 
 span {
     color: #555;
     font-weight: 400;
+}
+
+
+@media only screen and (max-width:800px) {
+
+    #chat-form {
+        display: grid;
+        grid-template-columns: 80% 20%;
+        column-gap: 1%;
+        width: 100%;
+        align-items: center;
+    }
 }

@@ -13,6 +13,7 @@
 
 <body>
     <div class="root">
+        <!--
         <section class="top-bar">
             <div class="title">
                 <a href="index.html">
@@ -21,55 +22,35 @@
                 </a>
             </div>
         </section>
+        -->
         <div class="chat-portion">
             <div class="side-bar">
                 <div class="user-title">
                     <i class="fa-solid fa-users" id="user-icon"></i>
                     Users:
                 </div>
-                <div class="divider"></div>
                 <div id="user-list">
-                    <!--
-                    <div class="user">
 
-                        <i class="fa-solid fa-user"></i>Andrew
-                    </div>
-                    <div class="user">
-                        Mark
-                    </div>
-                    -->
                 </div>
             </div>
             <div class="Chat-Display">
-                <div id="Content-Name">
-                    <!--Chat Name-->
-                </div>
-                <div id="message-container">
-                    <!-- Chat Messages
-                    <div class="disconnect-message">
-                        <p class="disconnect-content">
-                            Brad has left &nbsp;<span>7:30pm</span>
-                        </p>
+                <div class="chat-container">
+                    <div id="Content-Name">
+                        <!--Chat Name-->
+                        <h2></h2>
                     </div>
+                    <div id="message-container">
 
-                    <div class="message">
-                        <div class="messenger">
-                            Alex &nbsp;<span>7:30pm</span>
-                        </div>
-                        <div class="messenge-box">
-                            <p class="message-content">
-                                hello World!
-                            </p>
-                        </div>
                     </div>
-                -->
-
                 </div>
-                <div class="input-form">
-                    <form id="chat-form" onsubmit="return false">
-                        <input type="text" id="message-form" name="message-form" placeholder="Aa" autocomplete="off">
-                        <input type="button" id="Submit-message" value="Send">
-                    </form>
+                <div class="input-area">
+                    <div class="input-form">
+                        <form id="chat-form" onsubmit="return false">
+                            <input type="text" id="message-form" name="message-form" placeholder="Aa"
+                                autocomplete="off">
+                            <input type="button" id="Submit-message" value="Send">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
