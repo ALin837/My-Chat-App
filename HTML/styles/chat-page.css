@@ -80,7 +80,7 @@ a {
 .side-bar {
     box-sizing: border-box;
     background-color: white;
-    height: 100%;
+    height: 100vh;
     border-right: 1px solid rgba(0, 0, 0, .125);
 
 }
@@ -127,11 +127,13 @@ a {
 }
 
 .Chat-Display {
-    height: 100%;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
 .chat-container {
     height: 90%;
+    box-sizing: border-box;
 }
 
 h2 {
