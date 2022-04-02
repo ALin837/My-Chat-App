@@ -6,12 +6,13 @@
 
 
 #Error-Message {
+    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1.25rem;
     font-weight: 500;
     box-sizing: border-box;
     height: 2rem;
     color: red;
-    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
 }
 
 #home-page {
@@ -19,9 +20,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-style: normal;
     font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .sign-in {
@@ -36,11 +37,14 @@
 }
 
 .title-page {
+    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 2rem;
 }
 
 .forms {
+    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1.5rem;
+    font-weight: 500;
 }
 
 input[type=text] {
