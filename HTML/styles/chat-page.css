@@ -172,6 +172,7 @@ h2 {
 }
 
 .messenge-box {
+    /*max-width*/
     display: flex;
     /*color for your own message is purple*/
     /*font color for your own message is white*/
@@ -181,6 +182,10 @@ h2 {
 }
 
 .message-content {
+    max-width: 90%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
     margin: 0.5rem 0rem;
     border-radius: 15px;
     padding: 0.5rem 1rem;
@@ -270,6 +275,7 @@ h2 {
 }
 
 .user-messenge-box {
+    /*max-width*/
     display: flex;
     justify-content: right;
     flex-direction: row-reverse;
@@ -281,6 +287,10 @@ h2 {
 }
 
 .user-message-content {
+    max-width: 90%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
     margin: 0.5rem 0rem;
     border-radius: 15px;
     padding: 0.5rem 1rem;
