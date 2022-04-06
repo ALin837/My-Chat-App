@@ -2,6 +2,8 @@
 A web-based chat application that allows users to talk to each other within chatrooms.
 The frontend is built using HTML/CSS and Javascript while the backend is built using Node.js, Express.js, and Socket.io.
 
+Try it out on https://chat-app-heroku-alin.herokuapp.com/
+
 I use VSCode but you should be able to do
 ```
 > npm run dev
