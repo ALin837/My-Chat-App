@@ -8,6 +8,9 @@ I use VSCode but you should be able to do
 ```
 and go to localhost:3000 on your browser.
 
+Deployed version can be found here \
+https://chat-app-heroku-alin.herokuapp.com/
+
 # Lessons Learned
 This is my first project that has both a frontend and backend. I learned about Node.js, Express.js, and Socket.io for backend websocket connections and 
 I learned a lot about JavaScript and adding messages on the frontend. Building this project also helped me get better at my styling with CSS as well.
