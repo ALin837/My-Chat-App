@@ -4,7 +4,7 @@ The frontend is built using HTML/CSS and Javascript while the backend is built u
 
 Try it out on https://chat-app-heroku-alin.herokuapp.com/
 
-I use VSCode but you should be able to do
+If you choose to clone this repository you should be able to do
 ```
 > npm run dev
 ```
