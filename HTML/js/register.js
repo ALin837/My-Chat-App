@@ -20,7 +20,7 @@ function register(e) {
             username: username,
             password: password
         })
-        .then((response)=> {
+        .then((res)=> {
             window.location.href = '../'
         })
         .catch((err) => {
