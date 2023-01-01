@@ -25,14 +25,15 @@
                     </div>
                     <div class="forms">
                         <!--Values need to be sent to server. Room must be created and the username must be created as a client-->
-                        <form name="welcome" action="/register/user" method="POST" onsubmit="return register()">
+                        <!--     <form name="welcome" action="/register/user" method="POST" onsubmit="return register()">-->
+                        <form name="welcome" id="register-section">
                             <label for="Username">Username:</label><br>
                             <input type="text" id="Username" name="Username" placeholder="Please enter a Username"
                                 autocomplete="off"><br>
                             <label for="Password">Password:</label><br>
                             <input type="text" id="Password" name="Password" placeholder="Please enter a Password"
                                 autocomplete="off"><br>
-                            <input type="submit" id="Submit" value="Submit" onclick="register()"><br>
+                            <input type="submit" id="Submit" value="Submit"><br>
                         </form>
                     </div>
                 </section>
@@ -41,5 +42,6 @@
     </div>
 </body>
 <script src="js/register.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </html>

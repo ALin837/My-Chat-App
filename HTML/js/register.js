@@ -1,38 +1,38 @@
-async function register(event) {
 
-    
+const form = document.getElementById("register-section")
+form.addEventListener("submit", register)
+
+function register(e) {
+    e.preventDefault();
     var error = document.getElementById("Error-Message");
-    if ((document.forms["welcome"]["Password"].value=="") ||  (document.forms["welcome"]["Username"].value==="")) {
-        error.innerHTML="Both Fields need be filled in";
-        return false;
+    var message = ""
+    if ((document.forms["welcome"]["Password"].value=="") ||  (document.forms["welcome"]["Username"].value=="")) {
+        message="Both Fields need be filled in";
     } else if (document.forms["welcome"]["Username"].value.length > 20) {
-        error.innerHTML="Username needs to be less than 20 characters";
-        return false;
+        message="Username needs to be less than 20 characters";
     }  else if (document.forms["welcome"]["Password"].value.length > 20) {
-        error.innerHTML="Password needs to be less than 20 characters";
-        return false;
+        message="Password needs to be less than 20 characters";
+    } else {
+        const username = document.querySelector('#Username').value
+        const password = document.querySelector('#Password').value
+        axios.post('/register/user',
+        {
+            username: username,
+            password: password
+        })
+        .then((response)=> {
+            window.location.href = '../index.html'
+        })
+        .catch((err) => {
+            console.log(err.response.data);
+            message=err.response.data;
+            if (message !== "" || message == null) {
+                error.innerHTML = message;
+            }
+        });
     }
-    return true;
-    /*
-        
-    const username = document.querySelector('#Username').value
-    const password = document.querySelector('#Password').value
-    axios.post('/register/user',
-    {
-        username: username,
-        password: password
-    })
-    .then((response)=> {
-        console.log("Successful")
-        return true;
-    })
-    .catch((error) => {
-        console.log(error);
-        return false;
-    });
-    // non error related to password and username fields// Must check database 
-
-    return result;  
-    */
+    if (message !== "" || message == null) {
+        error.innerHTML = message;
+    }
 }
 

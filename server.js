@@ -27,13 +27,16 @@ app.use(bodyParser.urlencoded({
  */
 app.use(bodyParser.json());
 
-app.use('/register', register)
-
-
 // app.use -express.static allows you to server static files ex.png/html
 // safer to use an absolute path so you use the path module
 //
+
 app.use(express.static(path.join(__dirname,'HTML')));
+
+// Routes
+app.use('/register', register)
+
+
 //Run when the client connects
 io.on('connection', (socket) => {
     socket.on('joinRoom', ({username, roomname}) => {
