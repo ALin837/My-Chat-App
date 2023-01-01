@@ -7,6 +7,28 @@ const port =  process.env.PORT || 3000;
 const {createAndAddUser, getUser, deleteUser, getUsers, containUser} = require('./utils/users')
 const server = http.createServer(app);
 const io = socketio(server);
+const dbo = require('./utils/conn')
+const bodyParser = require("body-parser");
+dbo.connectToServer(()=>{})
+
+// routes
+const register = require("./routes/register")
+
+/** bodyParser.urlencoded(options)
+ * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
+ * and exposes the resulting object (containing the keys and values) on req.body
+ */
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+/**bodyParser.json(options)
+ * Parses the text as JSON and exposes the resulting object on req.body.
+ */
+app.use(bodyParser.json());
+
+app.use('/register', register)
+
 
 // app.use -express.static allows you to server static files ex.png/html
 // safer to use an absolute path so you use the path module

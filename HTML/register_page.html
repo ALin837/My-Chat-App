@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> My-Chat-App</title>
+    <link rel="stylesheet" href="styles/login-page.css">
+    <link rel="icon" href="./favicon.ico">
+</head>
+
+<body id="home-login">
+    <div class="root" id="home-page">
+        <div class="wrap">
+            <div class="sign-in">
+                <section class="sign-in-page">
+                    <div class="title-page">
+                        <h2>Create Account Page</h2>
+                    </div>
+                    <div id="Error-Message">
+                        <!--Room-name needs to be less than 20 characters-->
+                        <!--Username needs to be less than 20 characters -->
+                        <!--Both Forms need be filled in-->
+                    </div>
+                    <div class="forms">
+                        <!--Values need to be sent to server. Room must be created and the username must be created as a client-->
+                        <form name="welcome" action="/register/user" method="POST" onsubmit="return register()">
+                            <label for="Username">Username:</label><br>
+                            <input type="text" id="Username" name="Username" placeholder="Please enter a Username"
+                                autocomplete="off"><br>
+                            <label for="Password">Password:</label><br>
+                            <input type="text" id="Password" name="Password" placeholder="Please enter a Password"
+                                autocomplete="off"><br>
+                            <input type="submit" id="Submit" value="Submit" onclick="register()"><br>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/register.js"></script>
+
+</html>

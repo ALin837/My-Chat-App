@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.2",
     "express": "^4.17.3",
     "moment": "^2.29.1",
+    "mongodb": "4.13",
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
