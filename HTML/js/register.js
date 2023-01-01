@@ -21,7 +21,7 @@ function register(e) {
             password: password
         })
         .then((response)=> {
-            window.location.href = '../index.html'
+            window.location.href = '../'
         })
         .catch((err) => {
             console.log(err.response.data);
