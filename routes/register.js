@@ -20,12 +20,11 @@ router.post('/user', async (req, res) => {
           res.status(400).send("Username already taken!");
         } else {
             dbConnect.collection("user").insertOne(matchUser, function(err,result) {
-                if (err) 
-                {
+                if (err) {
                     res.status(400).send("Error inserting matches!");
                 } else {
                     console.log(`Added a new user with id ${result.insertedId}`);
-                    res.status(200).redirect('/');
+                    res.status(200).redirect('/')
                 }
             })
         }

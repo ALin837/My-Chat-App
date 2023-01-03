@@ -1,40 +1,40 @@
 import '../styles/login-page.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import React, { Component }  from 'react';
 function HomePage(props) 
 {
-    async function handleLogin(e) {
+    const navigate = useNavigate();
+    function handleLogin(e) {
         e.preventDefault();
         var error = document.getElementById("Error-Message");
-        var message = ""
         if ((document.forms["welcome"]["Password"].value=="") ||  (document.forms["welcome"]["Username"].value=="")) {
-            message="Both Fields need be filled in";
+            error.innerHTML="Both Fields need be filled in";
         } else {
             const username = document.querySelector('#Username').value
             const password = document.querySelector('#Password').value
-            await axios.post('/api/login/user',
-            {
-                username: username,
-                password: password
-            })
-            .then((res)=> {
-                console.log(res.response.data)
-                message=res.response.data;
-            })
-            .catch((err) => {
-                console.log(err.response.data);
-                message=err.response.data;
-            });
+            const userRegister =  async (username, password, navigate) => {
+                try {
+                    const response = await axios.post('/api/login/user',
+                    {
+                        username: username,
+                        password: password
+                    });
+                    console.log(response)
+                    if (response.status === 200) {
+                      return navigate("/chat", { replace: true }); // <-- issue imperative redirect
+                    }
+                } catch (err) {
+                    error.innerHTML =err.response.data;
+                }
+            }
+            userRegister(username, password, navigate);
         }
-        if (message !== "" || message == null) {
-            error.innerHTML = message;
-        }
-        return true;   
-
     } 
 
     return (
-    <body id="home-login">
+    <div id="home-login">
         <div className="root" id="home-page">
             <div className="wrap">
                 <div className="sign-in">
@@ -67,7 +67,7 @@ function HomePage(props)
                 </div>
             </div>
         </div>
-    </body>
+    </div>
     );
 }
 

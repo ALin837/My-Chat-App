@@ -1,36 +1,41 @@
 import '../styles/login-page.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import React, { Component }  from 'react';
 function Register(props) {
-    async function handleRegister(e) {
+    const navigate = useNavigate();
+    function handleRegister(e) {
         e.preventDefault();
         var error = document.getElementById("Error-Message");
-        var message = ""
         if ((document.forms["welcome"]["Password"].value=="") ||  (document.forms["welcome"]["Username"].value=="")) {
-            message="Both Fields need be filled in";
+            error.innerHTML="Both Fields need be filled in";
         } else if (document.forms["welcome"]["Username"].value.length > 20) {
-            message="Username needs to be less than 20 characters";
+            error.innerHTML="Username needs to be less than 20 characters";
         }  else if (document.forms["welcome"]["Password"].value.length > 20) {
-            message="Password needs to be less than 20 characters";
+            error.innerHTML="Password needs to be less than 20 characters";
         } else {
             const username = document.querySelector('#Username').value
             const password = document.querySelector('#Password').value
-            await axios.post('/api/register/user',
-            {
-                username: username,
-                password: password
-            })
-            .catch((err) => {
-                console.log(err.response.data);
-                message=err.response.data;
-            });
-        }
-        if (message !== "" || message == null) {
-            error.innerHTML = message;
+            const userRegister =  async (username, password, navigate) => {
+                try {
+                    const response = await axios.post('/api/register/user',
+                    {
+                        username: username,
+                        password: password
+                    });
+                    if (response.status === 200) {
+                      return navigate("/", { replace: true }); // <-- issue imperative redirect
+                    }
+                } catch (err) {
+                    error.innerHTML = err.response.data;
+                }
+            }
+            userRegister(username, password, navigate);
         }
     }
 
     return (
-        <body id="home-login">
+        <div id="home-login">
             <div className="root" id="home-page">
                 <div className="wrap">
                     <div className="sign-in">
@@ -52,14 +57,14 @@ function Register(props) {
                                     <label htmlFor ="Password">Password:</label><br></br>
                                     <input type="text" id="Password" name="Password" placeholder="Please enter a Password"
                                         autoComplete="off"></input> <br></br>
-                                    <input type="submit" id="Submit" value="Login"></input><br></br>
+                                    <input type="submit" id="Submit" value="Submit"></input><br></br>
                                 </form>
                             </div>
                         </section>
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
     );
 }
 

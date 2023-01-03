@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http');
 const socketio = require('socket.io');
 const app = express(); // initializes an express server
-const port =  process.env.PORT || 3000;
+const port =  process.env.PORT || 9000;
 const {createAndAddUser, getUser, deleteUser, getUsers, containUser} = require('./utils/users')
 const server = http.createServer(app);
 const io = socketio(server);
@@ -26,11 +26,6 @@ app.use(bodyParser.urlencoded({
  * Parses the text as JSON and exposes the resulting object on req.body.
  */
 app.use(bodyParser.json());
-
-// app.use -express.static allows you to server static files ex.png/html
-// safer to use an absolute path so you use the path module
-//
-app.use(express.static(path.join(__dirname,'HTML')));
 
 // Routes
 app.use('/api/register', register)

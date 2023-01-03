@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import HomePage from './components/home'
 import Register from './components/register'
-import Chat from './components/chat'
+import ChatPage from './components/chat'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { Component }  from 'react';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <Routes>
         <Route path = '/' exact element={<HomePage/>}/>
         <Route path = '/register' exact element={<Register/>}/>
-       {/*</Register><Route path = '/chat' exact element={Chat}/>*/}
+        <Route path = '/chat' exact element={<ChatPage/>}/>
       </Routes>
     </Router>
   );

@@ -17,13 +17,22 @@ router.post('/user', async (req, response) => {
         if (username == user.username) {
         bcrypt.compare(password, user.password, (err, res) => {
             if (!res) {
-              response.status(401).send("Username/Passwords do not match");
+              response.status(401).send("Username/Passwords may be incorrect");
             } else {
-              response.status(200).send("Login Successful! Redirecting User...")
+              // create token 
+              console.log("success");
+              let token = jwt.sign({name: username}, 'temporarysecretvalue', {expiresIn: '1h'})
+              console.log(token)
+              response.status(200).json(
+                {
+                  message:"Login Successful! Redirecting User...",
+                  token : token
+                }
+              )
             }
           })
         } else {
-          response.status(401).send("Username/Passwords do not match");
+          response.status(401).send("Username/Passwords may be incorrect");
         }
       }
     } catch(error) {
