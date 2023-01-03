@@ -15,7 +15,7 @@ function register(e) {
     } else {
         const username = document.querySelector('#Username').value
         const password = document.querySelector('#Password').value
-        axios.post('/register/user',
+        axios.post('/api/register/user',
         {
             username: username,
             password: password

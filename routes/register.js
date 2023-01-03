@@ -1,11 +1,12 @@
 var express = require('express');
 const dbo = require('../utils/conn')
+const CONSTANTS = require('../utils/constants')
 const bcrypt = require('bcrypt')
 var router = express.Router();
 
 router.post('/user', async (req, res) => {
     const dbConnect = dbo.getDb();  
-    const encryptedPassword =  await bcrypt.hash(req.body.password, 10);
+    const encryptedPassword =  await bcrypt.hash(req.body.password, CONSTANTS.SALT_ROUNDS);
     const matchUser = {
       username: req.body.username,
       password: encryptedPassword,
@@ -24,7 +25,7 @@ router.post('/user', async (req, res) => {
                     res.status(400).send("Error inserting matches!");
                 } else {
                     console.log(`Added a new user with id ${result.insertedId}`);
-                    res.status(200).send("Successful!");
+                    res.status(200).redirect('/');
                 }
             })
         }

@@ -10,9 +10,9 @@ const io = socketio(server);
 const dbo = require('./utils/conn')
 const bodyParser = require("body-parser");
 dbo.connectToServer(()=>{})
-
 // routes
 const register = require("./routes/register")
+const login = require("./routes/login")
 
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
@@ -30,11 +30,12 @@ app.use(bodyParser.json());
 // app.use -express.static allows you to server static files ex.png/html
 // safer to use an absolute path so you use the path module
 //
-
 app.use(express.static(path.join(__dirname,'HTML')));
 
 // Routes
-app.use('/register', register)
+app.use('/api/register', register)
+app.use('/api/login', login)
+
 
 
 //Run when the client connects
