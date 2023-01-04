@@ -13,7 +13,9 @@ dbo.connectToServer(()=>{})
 // routes
 const register = require("./routes/register")
 const login = require("./routes/login")
-
+const users = require("./routes/users")
+const conversation = require("./routes/conversation")
+const messages = require("./routes/messages")
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -30,7 +32,9 @@ app.use(bodyParser.json());
 // Routes
 app.use('/api/register', register)
 app.use('/api/login', login)
-
+app.use('/api/users', users)
+app.use('/api/conversation', conversation)
+app.use('/api/messages', messages)
 
 
 //Run when the client connects

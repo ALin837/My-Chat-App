@@ -24,7 +24,7 @@ router.post('/user', async (req, res) => {
                     res.status(400).send("Error inserting matches!");
                 } else {
                     console.log(`Added a new user with id ${result.insertedId}`);
-                    res.status(200).redirect('/')
+                    res.status(200).send("Success! Redirecting user to Login Page!")
                 }
             })
         }

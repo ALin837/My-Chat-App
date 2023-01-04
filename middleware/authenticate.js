@@ -1,17 +1,14 @@
-// This middleware is used to autheticate the token to allow valid 
-// api calls
-
 const jst = ('jsonwebtoken')
+require('dotenv').config();
 const authenticate = (req, res, next) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1]
-        const decode = jwt.verify(token, 'temporarysecretvalue')
-        req.user = decode
-        next();
-    }
-    catch(err) {
-        res.json({
-            message: 'Authentication Failed!'
-        })
-    }
+    const authHeader = req.headers['authorization']
+    if (!authHeader) return res.sendStatus(401)
+    console.log(authHeader)
+    const token = authHeader.split(' ')[1]
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) return res.sendStatus(403) // invalid token
+        req.user = decoded.username;
+    })
+    next();
 }
+module.exports = authenticate;

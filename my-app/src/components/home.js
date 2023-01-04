@@ -2,9 +2,11 @@ import '../styles/login-page.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import React, { Component }  from 'react';
+import React from 'react';
+import useAuth from '../hooks/useAuth';
 function HomePage(props) 
 {
+    const {setAuth} = useAuth();
     const navigate = useNavigate();
     function handleLogin(e) {
         e.preventDefault();
@@ -23,10 +25,13 @@ function HomePage(props)
                     });
                     console.log(response)
                     if (response.status === 200) {
-                      return navigate("/chat", { replace: true }); // <-- issue imperative redirect
+                        const accessToken = response.data.token;
+                        console.log(accessToken)
+                        setAuth({username, password, accessToken})
+                        return navigate("/chat", { replace: true }); // <-- issue imperative redirect
                     }
                 } catch (err) {
-                    error.innerHTML =err.response.data;
+                    error.innerHTML = err.response.data;
                 }
             }
             userRegister(username, password, navigate);

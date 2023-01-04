@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import PeopleIcon from '@mui/icons-material/People';
 const FriendList = (props) => {
+    const [users, setUsers] = useState()
     return (
         <Fragment>
             <div className="user-title">

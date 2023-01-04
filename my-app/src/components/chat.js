@@ -1,16 +1,19 @@
 import '../styles/chat-page.css'
-import React, { useState, useEffect } from 'react';
-import { Fragment } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import SearchBar from './smallcomponents/searchbar'
 import FriendList from './smallcomponents/friendlist'
 import IconButton from '@mui/material/IconButton';
 import PersonIcon from '@mui/icons-material/Person';
-import PeopleIcon from '@mui/icons-material/People';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import LogoutIcon from '@mui/icons-material/Logout';
+import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 function ChatPage(props) {
     const [ShowFriends, setShowFriends] = useState(true);
+    const navigate = useNavigate();
+    const {setAuth} = useAuth();
     const Sidebar = () => {
         if (ShowFriends) {
             return (
@@ -22,6 +25,12 @@ function ChatPage(props) {
             );
         }
     }
+    const handleLogOut = () => {
+        // set the authenticated user to empty
+        setAuth({})
+        return navigate("/", { replace: true }); // <-- issue imperative redirect
+    }
+
     return(
         <div>
             <div className="root">
@@ -32,6 +41,9 @@ function ChatPage(props) {
                         </IconButton>
                         <IconButton  size="large">
                             <ManageSearchIcon fontSize="inherit"  onClick={()=>{setShowFriends(false)}}/>
+                        </IconButton>
+                        <IconButton  size="large">
+                            <LogoutIcon fontSize="inherit"  onClick={()=>{handleLogOut()}}/>
                         </IconButton>
                     </div>
                     <div className="side-bar">
