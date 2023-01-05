@@ -11,7 +11,8 @@ router.post('/user', async (req, res) => {
       username: req.body.username,
       password: encryptedPassword,
       friends: [],
-      chats: []
+      chats: [],
+      refreshToken: ""
     };
     dbConnect
       .collection("user")

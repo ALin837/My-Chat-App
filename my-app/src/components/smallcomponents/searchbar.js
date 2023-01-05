@@ -2,32 +2,27 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import { Fragment } from 'react';
 import PersonIcon from '@mui/icons-material/Person';
+import useAuth from '../../hooks/useAuth';
+import useRefreshToken from '../../hooks/useRefreshToken';
 const searchBar = (props) => {
     const [users, setUsers] = useState();
-
+    const {auth} = useAuth();
+    const refresh = useRefreshToken();
     useEffect(()=> {
-        let isMounted = true;
-        const controller = new AbortController()
         const getUsers = async ()=> {
             try {
-                const response = await axios.get('/api/users/all', {
-                    signal: controller.signal
-                });
-                console.log(response.data.users);
-                if (isMounted) {
-                    setUsers(response.data.users);
-                }
-
+                const accessToken = auth.accessToken
+                const response = await axios.get('/api/users/all',  { 
+                     headers: {Authorization: `header ${accessToken}`}
+                    });
+                 setUsers(response.data.users);
             } catch (err) {
                 console.log(err)
             }
         }
         getUsers();
-        return ()=>{
-            isMounted = false;
-            controller.abort();
-        }
     }, [])
+    console.log(users)
     return (
         <Fragment>
             <div className="input-search-bar">
@@ -41,6 +36,7 @@ const searchBar = (props) => {
                     </div>
                 ))
             }
+            <button onClick = {()=>(refresh())}> BUTTON</button>
         </Fragment>
     );
 

@@ -1,9 +1,7 @@
 var express = require('express');
 const dbo = require('../utils/conn')
 var router = express.Router();
-const auth = require('../middleware/authenticate')
-
-router.post('/', auth, async (req, response) => {
+router.post('/',  async (req, response) => {
     const dbConnect = dbo.getDb();  
     const conversation = {
         members : [req.body.sender, req.body.reciever] 
@@ -18,7 +16,7 @@ router.post('/', auth, async (req, response) => {
     })
 });
 
-router.get('/:userId', auth, async (req, response) => {
+router.get('/:userId', async (req, response) => {
     const dbConnect = dbo.getDb();  
     try {
         const conversation = await dbConnect.collection("conversations").find({

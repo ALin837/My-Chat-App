@@ -1,12 +1,11 @@
 var express = require('express');
 const dbo = require('../utils/conn')
 var router = express.Router();
-const auth = require('../middleware/authenticate')
 
-router.get('/all',auth, async (req, response) => {
+router.get('/all',async (req, response) => {
     const dbConnect = dbo.getDb();  
     try {
-      const user = await dbConnect.collection("user").find({}, {username : 1})
+      const user = await dbConnect.collection("user").find({}).project( {username : 1}).toArray();
       console.log(user)
       if (!user) {
         response.status(401).send("Not successful");

@@ -5,8 +5,9 @@ import React from 'react';
 const RequireAuth = () => {
     const {auth} = useAuth();
     const location = useLocation();
+    
     return (
-        auth 
+        auth.username
         ? <Outlet/> 
         : <Navigate to="/" state={{from:location}} replace/>
     )

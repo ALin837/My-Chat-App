@@ -63,7 +63,7 @@ a {
 .chat-portion {
     height: 100%;
     display: grid;
-    grid-template-columns: 3% 17% 80%;
+    grid-template-columns: 3% 20% 77%;
     box-sizing: border-box;
 }
 
@@ -97,7 +97,7 @@ a {
     margin-right: 0.5rem;
 }
 
-.user-title {
+.user-name {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,8 +105,7 @@ a {
     height: 9%;
     font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 400;
-    font-size: 2rem;
-
+    font-size: 1.5rem;
 }
 
 #user-list {
@@ -120,9 +119,11 @@ a {
     display: flex;
     justify-content: left;
     align-items: center;
-    font-size: 1.7vh;
+    padding: 1rem;
+    font-size: 1rem;
     font-weight: 500;
-    margin: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
 
 .user i {

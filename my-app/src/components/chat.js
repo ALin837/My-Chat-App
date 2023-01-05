@@ -9,6 +9,7 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios"
 
 function ChatPage(props) {
     const [ShowFriends, setShowFriends] = useState(true);
@@ -25,9 +26,10 @@ function ChatPage(props) {
             );
         }
     }
-    const handleLogOut = () => {
+    const handleLogOut = async () => {
         // set the authenticated user to empty
         setAuth({})
+        await axios.get('/api/logout', { withCredentials: true });
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
 

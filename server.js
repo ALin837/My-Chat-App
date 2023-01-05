@@ -9,13 +9,21 @@ const server = http.createServer(app);
 const io = socketio(server);
 const dbo = require('./utils/conn')
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser")
+
 dbo.connectToServer(()=>{})
 // routes
 const register = require("./routes/register")
 const login = require("./routes/login")
+const logout = require("./routes/logout")
 const users = require("./routes/users")
 const conversation = require("./routes/conversation")
 const messages = require("./routes/messages")
+const refresh = require("./routes/refresh")
+
+// middleware
+const authenticate = require("./middleware/authenticate")
+
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -29,12 +37,20 @@ app.use(bodyParser.urlencoded({
  */
 app.use(bodyParser.json());
 
+// use cookies
+app.use(cookieParser())
+
 // Routes
 app.use('/api/register', register)
 app.use('/api/login', login)
+app.use('/api/logout', logout)
+app.use('/api/refresh', refresh)
+
+app.use(authenticate)
 app.use('/api/users', users)
 app.use('/api/conversation', conversation)
 app.use('/api/messages', messages)
+
 
 
 //Run when the client connects
