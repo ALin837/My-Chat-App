@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios';
 import { Fragment } from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import useAuth from '../../hooks/useAuth';
 import useRefreshToken from '../../hooks/useRefreshToken';
+import useAPI from '../../hooks/useApi'
 const searchBar = (props) => {
     const [users, setUsers] = useState();
     const {auth} = useAuth();
     const refresh = useRefreshToken();
+    const axiosInstance = useAPI()
     useEffect(()=> {
         const getUsers = async ()=> {
             try {
-                const accessToken = auth.accessToken
-                const response = await axios.get('/api/users/all',  { 
-                     headers: {Authorization: `header ${accessToken}`}
-                    });
+                const response = await axiosInstance.get('/api/users/all');
                  setUsers(response.data.users);
             } catch (err) {
                 console.log(err)

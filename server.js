@@ -10,7 +10,8 @@ const io = socketio(server);
 const dbo = require('./utils/conn')
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser")
-
+const cors = require('cors')
+const corsOptions = require('./config/corsoptions')
 dbo.connectToServer(()=>{})
 // routes
 const register = require("./routes/register")
@@ -23,6 +24,7 @@ const refresh = require("./routes/refresh")
 
 // middleware
 const authenticate = require("./middleware/authenticate")
+const allow = require("./middleware/allow")
 
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
@@ -40,6 +42,12 @@ app.use(bodyParser.json());
 // use cookies
 app.use(cookieParser())
 
+
+app.use(allow())
+
+// use cors
+app.use(cors(corsOptions))
+
 // Routes
 app.use('/api/register', register)
 app.use('/api/login', login)
@@ -54,6 +62,7 @@ app.use('/api/messages', messages)
 
 
 //Run when the client connects
+/*
 io.on('connection', (socket) => {
     socket.on('joinRoom', ({username, roomname}) => {
         //create a user and push the user onto the stack.
@@ -90,7 +99,7 @@ io.on('connection', (socket) => {
         }
    })
 })
-
+*/
 server.listen(port, ()=> {
     console.log(`Example App listening on port ${port}`)
 })

@@ -11,9 +11,19 @@ import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 
+//chat messaging
+import { io } from "socket.io-client";
+
+//const socket = io();
+
 function ChatPage(props) {
+    //const [isConnected, setIsConnected] = useState(socket.connected);
+    //const [lastPong, setLastPong] = useState(null);
+
+
     const [ShowFriends, setShowFriends] = useState(true);
     const navigate = useNavigate();
+
     const {setAuth} = useAuth();
     const Sidebar = () => {
         if (ShowFriends) {
@@ -32,6 +42,26 @@ function ChatPage(props) {
         await axios.get('/api/logout', { withCredentials: true });
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
+
+    const handleSendMessage = async ()=> {
+        try {
+
+
+        } catch(err) {
+            // this should handle the submission and if you submit while the
+            // refresh token has expired than you logout
+            return navigate("/", { replace: true }); // <-- issue imperative redirect
+
+        }
+
+    }
+
+    /*
+    useEffect(() => {
+        
+    }, [])
+    */
+
 
     return(
         <div>

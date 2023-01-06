@@ -11,7 +11,6 @@ const authenticate = (req, res, next) => {
         if (err) return res.sendStatus(403) // invalid token
         req.user = decoded.username;
     })
-    console.log('reach')
     next();
 }
 module.exports = authenticate;

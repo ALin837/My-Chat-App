@@ -2,7 +2,7 @@ import axios from 'axios'
 import useAuth from './useAuth'
 // this will get a new refresh token and then change the current authtoken
 const useRefreshToken = () => {
-    const {auth,setAuth} = useAuth()
+    const {auth, setAuth} = useAuth()
     const refresh = async ()=> {
         const response = await axios.get('/api/refresh', {
             withCredentials: true
