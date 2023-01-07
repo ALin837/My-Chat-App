@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const http = require('http');
 const socketio = require('socket.io');
 const app = express(); // initializes an express server
@@ -31,34 +30,31 @@ const allow = require("./middleware/allow")
  * and exposes the resulting object (containing the keys and values) on req.body
  */
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }));
 
 /**bodyParser.json(options)
  * Parses the text as JSON and exposes the resulting object on req.body.
  */
-app.use(bodyParser.json());
+app.use(express.json());
 
 // use cookies
 app.use(cookieParser())
 
-
-app.use(allow())
-
+// cors
 // use cors
+app.use(allow)
 app.use(cors(corsOptions))
 
 // Routes
 app.use('/api/register', register)
-app.use('/api/login', login)
-app.use('/api/logout', logout)
 app.use('/api/refresh', refresh)
-
+app.use('/api/logout', logout)
+app.use('/api/login', login)
 app.use(authenticate)
 app.use('/api/users', users)
 app.use('/api/conversation', conversation)
 app.use('/api/messages', messages)
-
 
 
 //Run when the client connects

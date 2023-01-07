@@ -2,7 +2,7 @@ var express = require('express');
 const dbo = require('../utils/conn')
 var router = express.Router();
 
-router.get('/all',async (req, response) => {
+router.get('/all', async (req, response) => {
     const dbConnect = dbo.getDb();  
     try {
       const user = await dbConnect.collection("user").find({}).project( {username : 1}).toArray();

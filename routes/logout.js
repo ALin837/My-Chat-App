@@ -17,16 +17,17 @@ router.get('/', async (req, res) => {
     const cookies = req.cookies
     if (!cookies?.jwt) return res.sendStatus(204);
     const reFreshToken = cookies.jwt;
+    console.log(reFreshToken)
     try {
         const foundUser = await dbConnect.collection("user").findOne({refreshToken: {$eq: reFreshToken}})
         console.log(foundUser)
         if (!foundUser) {
-            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None'});
+            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'None'});
             console.log("cleared refresh Token");
             return res.sendStatus(204)
         }
         deleteRefreshToken(foundUser.username)
-        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None'});
+        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'None'});
         console.log("cleared refresh Token");
         return res.sendStatus(204)
     } catch {
