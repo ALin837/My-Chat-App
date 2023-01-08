@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/all', async (req, response) => {
     const dbConnect = dbo.getDb();  
     try {
-      const user = await dbConnect.collection("user").find({}).project( {username : 1}).toArray();
+      const user = await dbConnect.collection("user").find({}).project( {username : 1, _id: 1}).toArray();
       console.log(user)
       if (!user) {
         response.status(401).send("Not successful");
