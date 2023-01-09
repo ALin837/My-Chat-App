@@ -10,7 +10,7 @@ router.post('/',  async (req, response) => {
         members : req.body.members, // array of receivers (in id form)
         time: req.body.time, // use a library for time
         message: req.body.message,
-        chat_id : req.body.chat_id
+        chatId : req.body.chatId
     }
     dbConnect.collection("messages").insertOne(message, function(err,result) {
     if (err) {

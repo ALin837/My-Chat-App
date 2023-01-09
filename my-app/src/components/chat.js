@@ -62,7 +62,7 @@ function ChatPage(props) {
                 members: currentChat.users
             })
             console.log(response)
-            return response.chatId;
+            return response.data.chatId;
         } catch(err) {
             console.log(err)
             return null
@@ -85,18 +85,21 @@ function ChatPage(props) {
             let chatId = 0;
             if (!ShowFriends) {
                 // create conversation 
+                console.log("REach")
                 chatId = await handleAddConvo()
+                console.log(chatId)
             } else {
                 chatId = currentChat.chatId
             }
             // 2. post the message to the db
             console.log(currentChat.users)
+            console.log(chatId)
             const response = await axiosInstance.post('/api/messages/', {
                 sender: auth.userId,
                 members: currentChat.users,
                 time: local,
                 message: message,
-                chat_id: chatId
+                chatId: chatId
             })
 
         } catch(err) {

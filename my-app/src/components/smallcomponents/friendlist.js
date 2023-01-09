@@ -8,7 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import '../../styles/chat-page.css'
 import useAPI from '../../hooks/useApi'
 const FriendList = (props) => {
-    const [chatList, setChatList] = useState()
+    const [chatList, setChatList] = useState([])
     const {auth} = useAuth();
     const axiosInstance = useAPI()
     // fetch all the users
@@ -16,14 +16,13 @@ const FriendList = (props) => {
         const getUsers = async ()=> {
             try {
                 const response = await axiosInstance.get(`/api/conversation/${auth.userId}`);
-                setChatList(response.conversations);
+                setChatList(response.data.conversations);
             } catch (err) {
                 console.log(err)
-                console.log(auth.userId)
             }
         }
         getUsers();
-    }, [])
+    }, [auth])
         // have btoh the sender and reciever id
     const handleUserClick = (chatId, chatName, members) => {
         props.onHandleReceiver({chatId: chatId, name: chatName, users: members});

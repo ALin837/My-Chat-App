@@ -14,7 +14,7 @@ router.post('/',  async (req, response) => {
         response.status(500).send("Error inserting conversation!");
     } else {
         console.log(`Added a new conversation with id ${result.insertedId}`);
-        response.status(200).json({chat_id: result.insertedId})
+        response.status(200).json({chatId: result.insertedId})
     }
     })
 });
@@ -25,7 +25,8 @@ router.get('/:userId', async (req, response) => {
     const dbConnect = dbo.getDb();  
     try {
         const conversations = await dbConnect.collection("conversations").find({
-            members : {$in: [req.params.userId] }}).toArray()
+            members :  {$elemMatch: {userId: req.params.userId} }}).toArray()
+        console.log(conversations)
         response.status(200).json({conversations: conversations})
     } catch {
         response.status(500).send("Error");
