@@ -7,17 +7,17 @@ router.post('/',  async (req, response) => {
     const dbConnect = dbo.getDb();  
     const message = {
         sender: req.body.sender, // will be by id of the sender
-        members : req.body.receivers, // array of receivers (in id form)
+        members : req.body.members, // array of receivers (in id form)
         time: req.body.time, // use a library for time
         message: req.body.message,
-        chat_id : req.body.id
+        chat_id : req.body.chat_id
     }
     dbConnect.collection("messages").insertOne(message, function(err,result) {
     if (err) {
-        res.status(500).send("Error inserting message!");
+        response.status(500).send("Error inserting message!");
     } else {
         console.log(`Added a new message with id ${result.insertedId}`);
-        res.status(200).send("Success!")
+        response.status(200).send("Success!")
     }
     })
 });

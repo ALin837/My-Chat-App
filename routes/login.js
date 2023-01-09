@@ -41,10 +41,11 @@ router.post('/user', async (req, response) => {
               console.log("------------------")
               response.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: false})
               // returns the accesstoken to the client
+              console.log(user._id.valueOf())
               response.status(200).json(
                 {
                   message:"Login Successful! Redirecting User...",
-                  user_id : user.user_id,
+                  userId : user._id.valueOf(),
                   token : accessToken
                 }
               )

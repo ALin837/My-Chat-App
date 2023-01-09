@@ -25,17 +25,21 @@ const searchBar = (props) => {
             }
         }
         getUsers();
-    }, [])
+    }, [auth])
 
     // have btoh the sender and reciever id
     const handleUserClick = (userId, username) => {
         // set the current conversation to the userID
+        //console.log(userId)
         const user = {userId, username}
+
         const selfname = auth.userId
         const selfusername = auth.username
 
-        const selfUser = {selfname, selfusername}
+        const selfUser = {userId: selfname, username: selfusername}
+        //console.log(selfUser)
         const arrayOfUsers = [user, selfUser]
+        console.log(arrayOfUsers)
         props.onHandleReceiver({userId: userId, name: username, users: arrayOfUsers});
     }
 
@@ -51,8 +55,7 @@ const searchBar = (props) => {
                     const fullName = item.username.toLowerCase();
                     return (
                         searchKeyword &&
-                        fullName.startsWith(searchKeyword) &&
-                        fullName !== searchKeyword
+                        fullName.startsWith(searchKeyword)
                     )
                 })
                 .slice(0,MAX_USERS_SHOWN)
