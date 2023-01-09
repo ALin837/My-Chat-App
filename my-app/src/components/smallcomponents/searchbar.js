@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { Fragment } from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import useAuth from '../../hooks/useAuth';
-import useRefreshToken from '../../hooks/useRefreshToken';
 import useAPI from '../../hooks/useApi'
+import '../../styles/chat-page.css'
 const MAX_USERS_SHOWN = 8;
 
 
@@ -19,7 +19,6 @@ const searchBar = (props) => {
             try {
                 const response = await axiosInstance.get('/api/users/all');
                 const result = response.data.users.filter(item => item.username != auth.username)
-                console.log(result)
                 setUsers(result);
             } catch (err) {
                 console.log(err)
@@ -27,6 +26,18 @@ const searchBar = (props) => {
         }
         getUsers();
     }, [])
+
+    // have btoh the sender and reciever id
+    const handleUserClick = (userId, username) => {
+        // set the current conversation to the userID
+        const user = {userId, username}
+        const selfname = auth.userId
+        const selfusername = auth.username
+
+        const selfUser = {selfname, selfusername}
+        const arrayOfUsers = [user, selfUser]
+        props.onHandleReceiver({userId: userId, name: username, users: arrayOfUsers});
+    }
 
     return (
         <Fragment>
@@ -45,8 +56,8 @@ const searchBar = (props) => {
                     )
                 })
                 .slice(0,MAX_USERS_SHOWN)
-                .map((item)=> (
-                    <div className="user">
+                .map((item)=> (  // the userID along with the username // the userid will be used for creating the future conversation object
+                    <div className="user" onClick= {() => {handleUserClick(item._id, item.username)}}>
                         <PersonIcon fontSize="inherit" /> {item.username}
                     </div>
                 ))

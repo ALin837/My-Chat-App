@@ -44,6 +44,7 @@ router.post('/user', async (req, response) => {
               response.status(200).json(
                 {
                   message:"Login Successful! Redirecting User...",
+                  user_id : user.user_id,
                   token : accessToken
                 }
               )

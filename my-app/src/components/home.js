@@ -26,8 +26,9 @@ function HomePage(props)
                     console.log(response)
                     if (response.status === 200) {
                         const accessToken = response.data.token;
+                        const userId = response.data.userId;
                         console.log(accessToken)
-                        setAuth({username, password, accessToken})
+                        setAuth({username, password, accessToken, userId})
                         return navigate("/chat", { replace: true }); // <-- issue imperative redirect
                     }
                 } catch (err) {

@@ -126,6 +126,12 @@ a {
     border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
 
+.user:hover {
+    background-color: #f3f3f3;
+    cursor: pointer
+}
+
+
 .user i {
     margin-right: 0.25rem;
 }

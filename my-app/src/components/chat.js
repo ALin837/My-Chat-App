@@ -10,7 +10,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
-
+import useAPI from '../hooks/useApi'
 //chat messaging
 import { io } from "socket.io-client";
 
@@ -20,48 +20,79 @@ function ChatPage(props) {
     //const [isConnected, setIsConnected] = useState(socket.connected);
     //const [lastPong, setLastPong] = useState(null);
 
+    // use the chat id. If the id is in the auth's conversations then default to that
+    // else try to create a new chat
+    const [currentChat, setCurrentChat] = useState({}); 
+    
 
     const [ShowFriends, setShowFriends] = useState(true);
     const navigate = useNavigate();
+    const axiosInstance = useAPI();
+    const {auth,setAuth} = useAuth();
 
-    const {setAuth} = useAuth();
+    // chatObject has an ID or a username/name
+    const onHandleReceiver = (chatObject) => {
+        console.log(chatObject)
+        setCurrentChat(chatObject);
+    }
+
     const Sidebar = () => {
         if (ShowFriends) {
             return (
-                <FriendList/>
+                <FriendList onHandleReceiver = {onHandleReceiver}/>
             );
         } else {
             return (
-                <SearchBar/>
+                <SearchBar onHandleReceiver = {onHandleReceiver}/>
             );
         }
     }
+
     const handleLogOut = async () => {
         // set the authenticated user to empty
         setAuth({})
-        await axios.get('/api/logout', { withCredentials: true });
+        await axiosInstance.get('/api/logout');
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
 
-    const handleSendMessage = async ()=> {
+    const handleSendMessage = async (message) => {
+        const date = new Date();
+        const local = date.toLocaleTimeString('en-US')
         try {
+            // check if its a userid or a chat id. Chat id requires 
+            // 1. we have the current chat so it should be fine.
+            // we create the conversation and get the id back.
+            const chatId = 0;
+            if (!ShowFriends) {
+                // create conversation 
+                try {
+                    const response = await axiosInstance.post(`/api/conversation/`, {
+                        name: currentChat.name, 
+                        members: currentChat.users
+                    })
+                    chatId = response.chatId;
+                } catch(err) {
+                    console.log(err)
+                }
+            } else {
+                chatId = currentChat.chatId
+            }
+            // 2. post the message to the db
 
-
+            const response = await axiosInstance.post('/api/messages/', {
+                sender: auth.userId,
+                members: currentChat.users,
+                time: local,
+                message: message,
+                chat_id: chatId
+            })
+            
         } catch(err) {
             // this should handle the submission and if you submit while the
-            // refresh token has expired than you logout
+            // refresh token has expired then you logout
             return navigate("/", { replace: true }); // <-- issue imperative redirect
-
         }
-
     }
-
-    /*
-    useEffect(() => {
-        
-    }, [])
-    */
-
 
     return(
         <div>
@@ -86,7 +117,9 @@ function ChatPage(props) {
                         <div className="chat-container">
                             <div id="Content-Name">
                                 {/*Chat Name*/}
-                                <h2></h2>
+                                <h2>
+                                    {currentChat.name}
+                                </h2>
                             </div>
                             <div id="message-container">
                                 {/*
@@ -158,7 +191,7 @@ function ChatPage(props) {
                         </div>
                         <div className="input-area">
                             <div className="input-form">
-                                <form id="chat-form" onSubmit={()=> {return false;}}>
+                                <form id="chat-form" onSubmit={(e)=> {handleSendMessage(e.target.value)}}>
                                     <input type="text" id="message-form" name="message-form" placeholder="Aa"
                                         autoComplete="off"></input>
                                     <input type="button" id="Submit-message" value="Send"></input>
