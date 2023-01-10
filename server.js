@@ -5,7 +5,7 @@ const app = express(); // initializes an express server
 const port =  process.env.PORT || 9000;
 const {createAndAddUser, getUser, deleteUser, getUsers, containUser} = require('./utils/users')
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server)
 const dbo = require('./utils/conn')
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser")
@@ -58,44 +58,41 @@ app.use('/api/messages', messages)
 
 
 //Run when the client connects
-/*
+
 io.on('connection', (socket) => {
-    socket.on('joinRoom', ({username, roomname}) => {
+    console.log("user has connected with" + socket.id)
+    socket.on('joinRoom', ({username}) => {
         //create a user and push the user onto the stack.
-        if (containUser(roomname, username)) {
-            socket.emit('My Error', 'The username has already been taken')
-        } else {
-            const user = createAndAddUser(username, socket.id, roomname);
-            //send welcome information
-            socket.join(user.roomname);
-            socket.emit('welcome', {name: "My-Chat-App Bot", message: 'Welcome to the chat room!'})
-            socket.broadcast.to(user.roomname).emit('join-message', user.username)
-    
-           //Send room information
-            const userlist = getUsers(user.roomname);
-            io.to(user.roomname).emit('new-user', userlist)
-        }
+        const user = createAndAddUser(username, socket.id);
+        //Send room information
+        const userlist = getUsers();
+        console.log(userlist)
+        io.emit('userlist', userlist)
 
     });
 
 
-    socket.on('chat message', (message) => {
-        const user = getUser(socket.id);
-        if (user) {
-            socket.broadcast.to(user.roomname).emit('message', message);
+    socket.on('chat message', ({senderID, receiverID, message}) => {
+        console.log(message)
+        console.log(receiverID)
+        console.log(senderID)
+        const receiver = getUser(receiverID);
+        const sender = getUser(senderID);
+        console.log(receiver)
+        console.log(sender)
+        if (receiver && sender) {
+            io.to(receiver.id).emit("message", {name: sender.username, message: message});
         }
     })
     
    socket.on('disconnect', () => {
        const user = deleteUser(socket.id);
        if (user) {
-           const userlist = getUsers(user.roomname);
-           io.to(user.roomname).emit('disconnection', user.username);
-           io.to(user.roomname).emit('new-user', userlist)
-        }
+        console.log("user has disconnected")
+       }
    })
 })
-*/
+
 server.listen(port, ()=> {
     console.log(`Example App listening on port ${port}`)
 })

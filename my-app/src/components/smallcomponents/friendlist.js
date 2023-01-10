@@ -7,6 +7,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useAuth from '../../hooks/useAuth';
 import '../../styles/chat-page.css'
 import useAPI from '../../hooks/useApi'
+function getChatName(username,members) {
+    if (members.length == 2) {
+        console.log(members)
+        const result = members.filter(item => (item.username != username))
+        return result[0].username
+    }
+}
 const FriendList = (props) => {
     const [chatList, setChatList] = useState([])
     const {auth} = useAuth();
@@ -25,6 +32,7 @@ const FriendList = (props) => {
     }, [auth])
         // have btoh the sender and reciever id
     const handleUserClick = (chatId, chatName, members) => {
+        console.log(chatName)
         props.onHandleReceiver({chatId: chatId, name: chatName, users: members});
     }
     return (
@@ -37,8 +45,8 @@ const FriendList = (props) => {
             { chatList &&
                 chatList
                 .map((item)=> (  // (chat ID gets put in, along with the chat name) 
-                    <div className="user" onClick= {() => {handleUserClick(item._id, item.name, item.members)}}>
-                        <PersonIcon fontSize="inherit" /> {item.name}
+                    <div className="user" onClick= {() => {handleUserClick(item._id, getChatName(auth.username,item.members), item.members)}}>
+                        <PersonIcon fontSize="inherit" /> {getChatName(auth.username,item.members)}
                     </div>
                 ))
             }

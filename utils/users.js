@@ -1,8 +1,8 @@
 const users = [];
 
 // creates a user and adds the user onto the stack
-function createAndAddUser(username, id, roomname) {
-    const user = {username, id, roomname};
+function createAndAddUser(username, id) {
+    const user = {username, id};
     users.push(user);
     return user;
 }
@@ -25,8 +25,8 @@ function deleteUser(id) {
 }
 
 //returns an array of the users in that room
-function getUsers(room) {
-    return users.filter(user => user.roomname === room);
+function getUsers() {
+    return users;
 }
 
 //returns true or false if a username is in a roomname

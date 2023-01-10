@@ -16,7 +16,7 @@ router.post('/',  async (req, response) => {
     if (err) {
         response.status(500).send("Error inserting message!");
     } else {
-        console.log(`Added a new message with id ${result.insertedId}`);
+        //console.log(`Added a new message with id ${result.insertedId}`);
         response.status(200).send("Success!")
     }
     })

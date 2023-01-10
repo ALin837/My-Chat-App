@@ -1,5 +1,5 @@
 import '../styles/chat-page.css'
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext, useRef} from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import SearchBar from './smallcomponents/searchbar'
 import FriendList from './smallcomponents/friendlist'
@@ -13,16 +13,31 @@ import axios from "axios"
 import useAPI from '../hooks/useApi'
 //chat messaging
 import { io } from "socket.io-client";
+/*
+socket.on('message', Obj => {
+    DisplayMessage(Obj.message, Obj.name)
+})
+*/
+// users makes a connection and then establishes a socket id.
+// all connected users also have a socket id
+// if the user is active we can use the socket id
+// if the user is inactive then it will be saved to the database > renderered and they'll see the message
 
-//const socket = io();
+
+function getChatName(username,members) {
+    if (members.length == 2) {
+        console.log(members)
+        const result = members.filter(item => (item.username != username))
+        return result[0].username
+    }
+}
 
 function ChatPage(props) {
-    //const [isConnected, setIsConnected] = useState(socket.connected);
-    //const [lastPong, setLastPong] = useState(null);
-
+    const [socket, setSocket] = useState(null);
     // use the chat id. If the id is in the auth's conversations then default to that
     // else try to create a new chat
     const [currentChat, setCurrentChat] = useState({}); 
+    const [currentUser, setCurrentUser] = useState("")
     const [chatInput, setChatInput] = useState("")
 
     const [ShowFriends, setShowFriends] = useState(true);
@@ -30,10 +45,123 @@ function ChatPage(props) {
     const axiosInstance = useAPI();
     const {auth,setAuth} = useAuth();
 
+    const [activeUserList, setActiveUserList] = useState([])
+    const messageContainer = useRef(null)
+    useEffect(()=> {
+        setSocket(io('http://localhost:3000'))
+        console.log(socket)
+    }, [])
+    useEffect(()=> {
+        if (socket) {
+            const username = auth.username
+            socket.emit('joinRoom', {username});
+            socket.on('message', (response)=> {
+                console.log(response)
+                DisplayMessage(response.name, response.message)
+        
+            })
+            socket.on('userlist', (response) => {
+                console.log(response)
+                setActiveUserList(response)
+            })
+        }
+        
+    }, [socket])
+
+
+
+
+    // userdisplay your own message and send message
+    const userDisplayMessage = (message, name) => {
+        const d = new Date();
+        const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        //Emit message
+        const senderID = socket.id
+        // get the id of the person you want to send to
+        console.log(activeUserList)
+        const result = activeUserList.filter((item) => item.username == currentUser)
+        let receiverID = 0;
+        if (result.length == 1) {
+            receiverID = result[0].id
+        }
+        console.log(receiverID)
+        console.log(message)
+        socket.emit('chat message', {senderID, receiverID, message})
+    // display.scrollTop = display.scrollHeight
+        /*
+        return (
+            <div className = "user-message">
+                <div className="user-messenger">
+                    {name}&nbsp;<span>{event}</span>
+                </div>
+                <div className="user-messenge-box">
+                    <p className="user-message-content">
+                        {message}
+                    </p>
+                </div>
+            </div>
+        )
+        */
+        const userdiv = document.createElement("div")
+        userdiv.classList.add('user-message');
+        userdiv.innerHTML = `<div class="user-messenger">
+            ${name}&nbsp;<span>${event}</span>
+            </div>
+                <div class="user-messenge-box">
+                <p class="user-message-content">
+                    ${message}
+                </p>
+            </div>`
+        messageContainer.current.appendChild(userdiv);
+        messageContainer.current.scrollTop = messageContainer.current.scrollHeight
+        messageContainer.current.scrollTop = messageContainer.current.scrollHeight
+
+    }
+
+    const DisplayMessage = (name, message) => {
+        const d = new Date();
+        const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        //display.scrollTop = display.scrollHeight
+        /*
+        return (
+            <div className = "message">
+                <div className="messenger">
+                    {name}&nbsp;<span>{event}</span>
+                </div>
+                <div className="messenge-box">
+                    <p className="message-content">
+                        {message}
+                    </p>
+                </div>
+            </div>
+        )
+        */
+        const div = document.createElement("div")
+        div.classList.add('message');
+        div.innerHTML = `<div class="messenger">
+            ${name} &nbsp;<span>${event}</span>
+            </div>
+            <div class="messenge-box">
+                <p class="message-content">
+                    ${message}
+                </p>
+            </div>`
+        messageContainer.current.appendChild(div);
+        messageContainer.current.scrollTop = messageContainer.current.scrollHeight
+
+    }
+
     // chatObject has an ID or a username/name
     const onHandleReceiver = (chatObject) => {
+        const name = getChatName(auth.username, chatObject.users)
+        console.log(name)
+        setCurrentUser(name)
+        
+        // store name as empty if its private
+        chatObject.name=""
         console.log(chatObject)
         setCurrentChat(chatObject);
+        
     }
 
     const Sidebar = () => {
@@ -71,10 +199,10 @@ function ChatPage(props) {
 
     const handleSendMessage = async (e) => {
         e.preventDefault()
-        if (!chatInput || !currentChat.name) {
+        console.log(e)
+        if (chatInput=="" || currentUser == "") {
             return 
         }
-        console.log(e)
         const message = chatInput;
         const date = new Date();
         const local = date.toLocaleTimeString('en-US')
@@ -85,7 +213,6 @@ function ChatPage(props) {
             let chatId = 0;
             if (!ShowFriends) {
                 // create conversation 
-                console.log("REach")
                 chatId = await handleAddConvo()
                 console.log(chatId)
             } else {
@@ -102,10 +229,16 @@ function ChatPage(props) {
                 chatId: chatId
             })
 
+            // 3. websocket send/update
+            // When 'you' the user sends a message
+            userDisplayMessage(message, auth.username)
+            setChatInput("")
+            document.getElementById('message-form').value = "";
         } catch(err) {
             // this should handle the submission and if you submit while the
             // refresh token has expired then you logout
-            return navigate("/", { replace: true }); // <-- issue imperative redirect
+            console.log(err)
+            //return navigate("/", { replace: true }); // <-- issue imperative redirect
         }
     }
 
@@ -136,75 +269,11 @@ function ChatPage(props) {
                             <div id="Content-Name">
                                 {/*Chat Name*/}
                                 <h2>
-                                    {currentChat.name}
+                                    {currentUser}
                                 </h2>
                             </div>
-                            <div id="message-container">
-                                {/*
-                                <div className="disconnect-message">
-                                    <p className="disconnect-content">
-                                        Brad has left &nbsp;<span>7:30pm</span>
-                                    </p>
-                                </div>
-                                <div className="message">
-                                    <div className="messenger">
-                                        Alex &nbsp;<span>7:30pm</span>
-                                    </div>
-                                    <div className="messenge-box">
-                                        <p className="message-content">
-                                            hello World!
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    <div className="messenger">
-                                        Mark &nbsp;<span>7:30pm</span>
-                                    </div>
-                                    <div className="messenge-box">
-                                        <p className="message-content">
-                                            that my friend is something a bit scary u might want to avoid for now lmao, because
-                                            theres so many security things u have to put into place, its not exactly worth
-                                            looking
-                                            into, but ig if ur the only login, and logging in does nothing, then its fine,
-                                            because
-                                            if u have other logging in, they will complain if u have a breach.
-                                            that my friend is something a bit scary u might want to avoid for now lmao, because
-                                            theres so many security things u have to put into place, its not exactly worth
-                                            looking
-                                            into, but ig if ur the only login, and logging in does nothing, then its fine,
-                                            because
-                                            if u have other logging in, they will complain if u have a breach.
-                                            that my friend is something a bit scary u might want to avoid for now lmao, because
-                                            theres so many security things u have to put into place, its not exactly worth
-                                            looking
-                                            into, but ig if ur the only login, and logging in does nothing, then its fine,
-                                            because
-                                            if u have other logging in, they will complain if u have a breach
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    <div className="messenger">
-                                        Brain &nbsp;<span>7:30pm</span>
-                                    </div>
-                                    <div className="messenge-box">
-                                        <p className="message-content">
-                                            You guys are all fucking stupid
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="user-message">
-                                    <div className="user-messenger">
-                                        Andrew&nbsp;<span>7:30pm</span>
-                                    </div>
-                                    <div className="user-messenge-box">
-                                        <p className="user-message-content">
-                                            stfu!!
-                                        </p>
-                                    </div>
-                                </div>
-                            */}
-
+                            <div id="message-container" ref = {messageContainer}>
+                                {/*handle your messages here*/}
                             </div>
                         </div>
                         <div className="input-area">

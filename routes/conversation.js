@@ -26,7 +26,7 @@ router.get('/:userId', async (req, response) => {
     try {
         const conversations = await dbConnect.collection("conversations").find({
             members :  {$elemMatch: {userId: req.params.userId} }}).toArray()
-        console.log(conversations)
+        //console.log(conversations)
         response.status(200).json({conversations: conversations})
     } catch {
         response.status(500).send("Error");
