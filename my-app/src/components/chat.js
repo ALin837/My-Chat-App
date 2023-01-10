@@ -153,8 +153,12 @@ function ChatPage(props) {
 
     // chatObject has an ID or a username/name
     const onHandleReceiver = (chatObject) => {
+        const tempName = currentUser
         const name = getChatName(auth.username, chatObject.users)
         console.log(name)
+        if (name != tempName) {
+            messageContainer.current.innerHTML=''
+        }
         setCurrentUser(name)
         
         // store name as empty if its private
@@ -210,14 +214,9 @@ function ChatPage(props) {
             // check if its a userid or a chat id. Chat id requires 
             // 1. we have the current chat so it should be fine.
             // we create the conversation and get the id back.
-            let chatId = 0;
-            if (!ShowFriends) {
-                // create conversation 
-                chatId = await handleAddConvo()
-                console.log(chatId)
-            } else {
-                chatId = currentChat.chatId
-            }
+            let chatId = await handleAddConvo()
+            console.log(chatId)
+
             // 2. post the message to the db
             console.log(currentChat.users)
             console.log(chatId)
@@ -249,7 +248,7 @@ function ChatPage(props) {
                     <div className="navigation-bar">
                         <IconButton size="large">
                             <PersonIcon fontSize="inherit" onClick={()=> {
-                                setCurrentChat({}) // set it to empty for when you show friends// removes the current chat object if you clicked during search
+                                //setCurrentChat({}) // set it to empty for when you show friends// removes the current chat object if you clicked during search
                                 setShowFriends(true)}
                                 }/>
                         </IconButton>
