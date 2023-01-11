@@ -61,7 +61,7 @@ function HomePage(props)
                                 <input type="text" id="Username" name="Username" placeholder="Please enter a Username"
                                     autoComplete="off"></input><br></br>
                                 <label htmlFor ="Password">Password:</label><br></br>
-                                <input type="text" id="Password" name="Password" placeholder="Please enter a Password"
+                                <input type="password" id="Password" name="Password" placeholder="Please enter a Password"
                                     autoComplete="off"></input> <br></br>
                                 <input type="submit" id="Submit" value="Login"></input><br></br>
                             </form>

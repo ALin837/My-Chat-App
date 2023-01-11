@@ -38,7 +38,6 @@ function ChatPage(props) {
     // else try to create a new chat
     const [currentChat, setCurrentChat] = useState({}); 
     const [currentUser, setCurrentUser] = useState("")
-    const [chatInput, setChatInput] = useState("")
 
     const [ShowFriends, setShowFriends] = useState(true);
     const navigate = useNavigate();
@@ -204,10 +203,11 @@ function ChatPage(props) {
     const handleSendMessage = async (e) => {
         e.preventDefault()
         console.log(e)
-        if (chatInput=="" || currentUser == "") {
+        const message = document.getElementById('message-form').value;
+        if (message=="" || currentUser == "") {
             return 
         }
-        const message = chatInput;
+        //const message = chatInput;
         const date = new Date();
         const local = date.toLocaleTimeString('en-US')
         try {
@@ -231,7 +231,6 @@ function ChatPage(props) {
             // 3. websocket send/update
             // When 'you' the user sends a message
             userDisplayMessage(message, auth.username)
-            setChatInput("")
             document.getElementById('message-form').value = "";
         } catch(err) {
             // this should handle the submission and if you submit while the
@@ -279,9 +278,7 @@ function ChatPage(props) {
                             <div className="input-form">
                                 <form id="chat-form" onSubmit={(e)=> {handleSendMessage(e)}}>
                                     <input type="text" id="message-form" name="message-form" placeholder="Aa"
-                                        autoComplete="off" onChange = {(e) => {
-                                            setChatInput(e.target.value)
-                                        }}></input>
+                                        autoComplete="off"></input>
                                     <input type="submit" id="Submit-message" value="Send"></input>
                                 </form>
                             </div>
