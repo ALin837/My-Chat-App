@@ -5,7 +5,7 @@ using React while the backend is built using Node.js, Express.js, and Socket.io.
 my database to store conversations and messages.
 
 # How to Run the Application
-I use VSCode but you should be able to do
+Clone the repository and in a terminal run
 ```
 > npm run dev
 ```
@@ -21,6 +21,7 @@ You should be able to go to localhost:3000 and interact with the application loc
 # Lessons Learned
 This is my first project that has both a frontend and backend. I learned about Node.js, Express.js, and Socket.io for 
 backend websocket connections and I learned a lot about React on the frontend. Building this project made me realize 
-that there are a lot of things to consider when building a large scale chat application.
+that there are a lot of things to consider when building a large scale chat application like access and refresh tokens,
+security, best practices when storing information in databases, and how to design an api.
 
 
