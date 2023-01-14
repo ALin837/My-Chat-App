@@ -9,24 +9,12 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios"
 import useAPI from '../hooks/useApi'
 //chat messaging
 import { io } from "socket.io-client";
-/*
-socket.on('message', Obj => {
-    DisplayMessage(Obj.message, Obj.name)
-})
-*/
-// users makes a connection and then establishes a socket id.
-// all connected users also have a socket id
-// if the user is active we can use the socket id
-// if the user is inactive then it will be saved to the database > renderered and they'll see the message
-
 
 function getChatName(username,members) {
     if (members.length == 2) {
-        console.log(members)
         const result = members.filter(item => (item.username != username))
         return result[0].username
     }
@@ -48,27 +36,20 @@ function ChatPage(props) {
     const messageContainer = useRef(null)
     useEffect(()=> {
         setSocket(io('http://localhost:3000'))
-        console.log(socket)
     }, [])
     useEffect(()=> {
         if (socket) {
             const username = auth.username
             socket.emit('joinRoom', {username});
             socket.on('message', (response)=> {
-                console.log(response)
                 DisplayMessage(response.name, response.message)
-        
             })
             socket.on('userlist', (response) => {
-                console.log(response)
                 setActiveUserList(response)
             })
         }
         
     }, [socket])
-
-
-
 
     // userdisplay your own message and send message
     const userDisplayMessage = (message, name) => {
@@ -77,30 +58,12 @@ function ChatPage(props) {
         //Emit message
         const senderID = socket.id
         // get the id of the person you want to send to
-        console.log(activeUserList)
         const result = activeUserList.filter((item) => item.username == currentUser)
         let receiverID = 0;
         if (result.length == 1) {
             receiverID = result[0].id
         }
-        console.log(receiverID)
-        console.log(message)
         socket.emit('chat message', {senderID, receiverID, message})
-    // display.scrollTop = display.scrollHeight
-        /*
-        return (
-            <div className = "user-message">
-                <div className="user-messenger">
-                    {name}&nbsp;<span>{event}</span>
-                </div>
-                <div className="user-messenge-box">
-                    <p className="user-message-content">
-                        {message}
-                    </p>
-                </div>
-            </div>
-        )
-        */
         const userdiv = document.createElement("div")
         userdiv.classList.add('user-message');
         userdiv.innerHTML = `<div class="user-messenger">
@@ -114,27 +77,13 @@ function ChatPage(props) {
         messageContainer.current.appendChild(userdiv);
         messageContainer.current.scrollTop = messageContainer.current.scrollHeight
         messageContainer.current.scrollTop = messageContainer.current.scrollHeight
-
     }
 
     const DisplayMessage = (name, message) => {
+        const current = document.getElementById("current-user").innerHTML;
+        if (name != current) {return;}
         const d = new Date();
         const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        //display.scrollTop = display.scrollHeight
-        /*
-        return (
-            <div className = "message">
-                <div className="messenger">
-                    {name}&nbsp;<span>{event}</span>
-                </div>
-                <div className="messenge-box">
-                    <p className="message-content">
-                        {message}
-                    </p>
-                </div>
-            </div>
-        )
-        */
         const div = document.createElement("div")
         div.classList.add('message');
         div.innerHTML = `<div class="messenger">
@@ -147,24 +96,21 @@ function ChatPage(props) {
             </div>`
         messageContainer.current.appendChild(div);
         messageContainer.current.scrollTop = messageContainer.current.scrollHeight
-
     }
 
     // chatObject has an ID or a username/name
     const onHandleReceiver = (chatObject) => {
         const tempName = currentUser
+        // gets the chat name between a private conversation
         const name = getChatName(auth.username, chatObject.users)
-        console.log(name)
+        // if the name of the user you're talking to doesn't match the current user
         if (name != tempName) {
             messageContainer.current.innerHTML=''
         }
         setCurrentUser(name)
-        
         // store name as empty if its private
         chatObject.name=""
-        console.log(chatObject)
         setCurrentChat(chatObject);
-        
     }
 
     const Sidebar = () => {
@@ -192,7 +138,6 @@ function ChatPage(props) {
                 name: currentChat.name, 
                 members: currentChat.users
             })
-            console.log(response)
             return response.data.chatId;
         } catch(err) {
             console.log(err)
@@ -202,7 +147,6 @@ function ChatPage(props) {
 
     const handleSendMessage = async (e) => {
         e.preventDefault()
-        console.log(e)
         const message = document.getElementById('message-form').value;
         if (message=="" || currentUser == "") {
             return 
@@ -215,11 +159,8 @@ function ChatPage(props) {
             // 1. we have the current chat so it should be fine.
             // we create the conversation and get the id back.
             let chatId = await handleAddConvo()
-            console.log(chatId)
 
             // 2. post the message to the db
-            console.log(currentChat.users)
-            console.log(chatId)
             const response = await axiosInstance.post('/api/messages/', {
                 sender: auth.userId,
                 members: currentChat.users,
@@ -245,18 +186,17 @@ function ChatPage(props) {
             <div className="root">
                 <div className="chat-portion">
                     <div className="navigation-bar">
-                        <IconButton size="large">
-                            <PersonIcon fontSize="inherit" onClick={()=> {
-                                //setCurrentChat({}) // set it to empty for when you show friends// removes the current chat object if you clicked during search
-                                setShowFriends(true)}
-                                }/>
-                        </IconButton>
-                        <IconButton  size="large">
-                            <ManageSearchIcon fontSize="inherit"  onClick={()=>{setShowFriends(false)}}/>
-                        </IconButton>
-                        <IconButton  size="large">
-                            <LogoutIcon fontSize="inherit"  onClick={()=>{handleLogOut()}}/>
-                        </IconButton>
+                        <div className = "navigation-bar-button-wrap">
+                            <IconButton className = "fontButton" size="large" onClick={()=> {setShowFriends(true)}}>
+                                <PersonIcon fontSize="inherit" />
+                            </IconButton>
+                            <IconButton className = "fontButton" size="large" onClick={()=>{setShowFriends(false)}}>
+                                <ManageSearchIcon fontSize="inherit"  />
+                            </IconButton>
+                            <IconButton className = "fontButton" size="large"  onClick={()=>{handleLogOut()}}>
+                                <LogoutIcon fontSize="inherit" />
+                            </IconButton>
+                        </div>
                     </div>
                     <div className="side-bar">
                         <Sidebar/>
@@ -266,7 +206,7 @@ function ChatPage(props) {
                         <div className="chat-container">
                             <div id="Content-Name">
                                 {/*Chat Name*/}
-                                <h2>
+                                <h2 id="current-user">
                                     {currentUser}
                                 </h2>
                             </div>
@@ -288,7 +228,6 @@ function ChatPage(props) {
             </div>
         </div>
     );
-
 }
 
 export default ChatPage

@@ -25,7 +25,7 @@ const searchBar = (props) => {
             }
         }
         getUsers();
-    }, [auth])
+    }, [auth["username"]])
 
     // have btoh the sender and reciever id
     const handleUserClick = (userId, username) => {
@@ -59,8 +59,8 @@ const searchBar = (props) => {
                     )
                 })
                 .slice(0,MAX_USERS_SHOWN)
-                .map((item)=> (  // the userID along with the username // the userid will be used for creating the future conversation object
-                    <div className="user" onClick= {() => {handleUserClick(item._id, item.username)}}>
+                .map((item, index)=> (  // the userID along with the username // the userid will be used for creating the future conversation object
+                    <div key = {index} className="user" onClick= {() => {handleUserClick(item._id, item.username)}}>
                         <PersonIcon fontSize="inherit" /> {item.username}
                     </div>
                 ))

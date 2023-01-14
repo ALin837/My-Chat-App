@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios';
 import { Fragment } from 'react';
 import PersonIcon from '@mui/icons-material/Person';
-import PeopleIcon from '@mui/icons-material/People';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useAuth from '../../hooks/useAuth';
 import '../../styles/chat-page.css'
 import useAPI from '../../hooks/useApi'
 function getChatName(username,members) {
     if (members.length == 2) {
-        console.log(members)
         const result = members.filter(item => (item.username != username))
         return result[0].username
     }
@@ -29,12 +26,13 @@ const FriendList = (props) => {
             }
         }
         getUsers();
-    }, [auth])
+    }, [])
         // have btoh the sender and reciever id
     const handleUserClick = (chatId, chatName, members) => {
         console.log(chatName)
         props.onHandleReceiver({chatId: chatId, name: chatName, users: members});
     }
+    console.log("render");
     return (
         <Fragment>
             <div className="user-name">
@@ -44,8 +42,8 @@ const FriendList = (props) => {
             <div id="user-list">
             { chatList &&
                 chatList
-                .map((item)=> (  // (chat ID gets put in, along with the chat name) 
-                    <div className="user" onClick= {() => {handleUserClick(item._id, getChatName(auth.username,item.members), item.members)}}>
+                .map((item, index)=> (  // (chat ID gets put in, along with the chat name) 
+                    <div key = {index} className="user" onClick= {() => {handleUserClick(item._id, getChatName(auth.username,item.members), item.members)}}>
                         <PersonIcon fontSize="inherit" /> {getChatName(auth.username,item.members)}
                     </div>
                 ))

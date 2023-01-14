@@ -87,11 +87,19 @@ a {
 }
 
 .navigation-bar {
+    display: flex;
+    justify-content: center;
     box-sizing: border-box;
     background-color: white;
     height: 100vh;
     border-right: 1px solid rgba(0, 0, 0, .125);
 }
+
+.navigation-bar-button-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
 
 #user-icon {
     margin-right: 0.5rem;
