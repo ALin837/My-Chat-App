@@ -8,7 +8,7 @@ const MAX_USERS_SHOWN = 8;
 
 
 const searchBar = (props) => {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const {auth} = useAuth();
     const axiosInstance = useAPI()
@@ -25,7 +25,7 @@ const searchBar = (props) => {
             }
         }
         getUsers();
-    }, [auth["username"]])
+    }, users)
 
     // have btoh the sender and reciever id
     const handleUserClick = (userId, username) => {

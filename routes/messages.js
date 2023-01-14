@@ -24,17 +24,18 @@ router.post('/',  async (req, response) => {
 
 // this method takes a chat_id and returns all the messages
 // GET: CHAT_ID
-router.post('/:chatId',  async (req, response) => {
+router.get('/:chatId',  async (req, response) => {
+    console.log(req.params.chatId);
     const dbConnect = dbo.getDb();  
     try {
         const chatId = req.params.chatId
-        const chatMessages = await dbConnect.collection("messages").find({chat_id :chatId}).toArray()
+        const chatMessages = await dbConnect.collection("messages").find({chatId :chatId}).toArray()
         if (!chatMessages) {
             response.status(401).send("No chat exists with chatId:"+ chatId);
         }
-        res.status(200).json({chat: chatMessages})
+        response.status(200).json({chat: chatMessages})
     } catch {
-        res.status(500).send("Error");
+        response.status(500).send("Error");
     }
 });
 

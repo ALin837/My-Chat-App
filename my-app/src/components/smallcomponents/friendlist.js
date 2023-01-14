@@ -26,7 +26,7 @@ const FriendList = (props) => {
             }
         }
         getUsers();
-    }, [])
+    }, chatList)
         // have btoh the sender and reciever id
     const handleUserClick = (chatId, chatName, members) => {
         console.log(chatName)

@@ -51,19 +51,50 @@ function ChatPage(props) {
         
     }, [socket])
 
+    const printDataOnScreen = (arrOfMessages) => 
+    {
+        const userId = auth.userId;
+        const username = auth.username;
+        const current = document.getElementById("current-user").innerHTML;
+        for (let i = 0; i < arrOfMessages.length; ++i) {
+            if (userId == arrOfMessages[i]["sender"]) {
+                userDisplayMessage(username, arrOfMessages[i]["message"], false);
+            } else {
+                DisplayMessage(current,arrOfMessages[i]["message"]);
+            }
+        }
+    }
+
+    useEffect(()=> {
+        const getMessages = async ()=> {
+            if (currentChat.chatId) {
+                try {
+                    const chatId = currentChat.chatId;
+                    const response = await axiosInstance.get(`/api/messages/${chatId}`);
+                    printDataOnScreen(response.data.chat)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        }
+        getMessages();
+    }, [currentChat.chatId])
+
     // userdisplay your own message and send message
-    const userDisplayMessage = (message, name) => {
+    const userDisplayMessage = (name, message, doEmit) => {
         const d = new Date();
         const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        //Emit message
-        const senderID = socket.id
-        // get the id of the person you want to send to
-        const result = activeUserList.filter((item) => item.username == currentUser)
-        let receiverID = 0;
-        if (result.length == 1) {
-            receiverID = result[0].id
+        if (doEmit) {
+            //Emit message
+            const senderID = socket.id
+            // get the id of the person you want to send to
+            const result = activeUserList.filter((item) => item.username == currentUser)
+            let receiverID = 0;
+            if (result.length == 1) {
+                receiverID = result[0].id
+            }
+            socket.emit('chat message', {senderID, receiverID, message})
         }
-        socket.emit('chat message', {senderID, receiverID, message})
         const userdiv = document.createElement("div")
         userdiv.classList.add('user-message');
         userdiv.innerHTML = `<div class="user-messenger">
@@ -171,7 +202,7 @@ function ChatPage(props) {
 
             // 3. websocket send/update
             // When 'you' the user sends a message
-            userDisplayMessage(message, auth.username)
+            userDisplayMessage(auth.username, message,true)
             document.getElementById('message-form').value = "";
         } catch(err) {
             // this should handle the submission and if you submit while the
