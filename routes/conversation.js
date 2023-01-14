@@ -14,7 +14,7 @@ router.post('/',  async (req, response) => {
         const receiver = req.body.members[0];
         const sender = req.body.members[1];
         const user = await dbConnect.collection("conversations").findOne({$and: [{members: {$elemMatch: receiver}},{members: {$elemMatch: sender}}]})
-        console.log(user) 
+        //console.log(user) 
         if (user) {
             response.status(200).json({chatId: user._id.valueOf()})
         } else {
@@ -30,6 +30,26 @@ router.post('/',  async (req, response) => {
     }
 });
 
+// This method takes a userId and a second user id and returns all the conversations based off of that
+router.get('/:user1Id/:user2Id', async (req, response) => {
+    const dbConnect = dbo.getDb();  
+    const receiver = req.params.user1Id;
+    const sender = req.params.user2Id;
+    console.log("receiver:" + receiver)
+    console.log("sender:" + sender)
+    try {
+       //const conversations = await dbConnect.collection("conversations").find({"members.userId": {$all : [receiver, sender]}})
+       const conversations = await dbConnect.collection("conversations").find({"members.userId": {$all : [receiver, sender]}}).toArray()
+        if (conversations[0]._id) {
+            console.log( conversations[0]._id.valueOf())
+            response.status(200).json({chatId: conversations[0]._id.valueOf()})
+        } else {
+            response.status(404).json({chatId: 0})
+        }
+    } catch {
+        response.status(500).send("Error");
+    }
+});
 
 // This method takes a userId and returns all the conversations based off of that
 router.get('/:userId', async (req, response) => {

@@ -53,6 +53,7 @@ function ChatPage(props) {
 
     const printDataOnScreen = (arrOfMessages) => 
     {
+        messageContainer.current.innerHTML=''
         const userId = auth.userId;
         const username = auth.username;
         const current = document.getElementById("current-user").innerHTML;
@@ -66,6 +67,7 @@ function ChatPage(props) {
     }
 
     useEffect(()=> {
+        
         const getMessages = async ()=> {
             if (currentChat.chatId) {
                 try {
@@ -74,6 +76,7 @@ function ChatPage(props) {
                     printDataOnScreen(response.data.chat)
                 } catch (err) {
                     console.log(err)
+                    // print no data on teh screen
                 }
             }
         }
@@ -129,6 +132,19 @@ function ChatPage(props) {
         messageContainer.current.scrollTop = messageContainer.current.scrollHeight
     }
 
+    const handleAddConvo = async () => {
+        try {
+            const response = await axiosInstance.post(`/api/conversation/`, {
+                name: currentChat.name, 
+                members: currentChat.users
+            })
+            return response.data.chatId;
+        } catch(err) {
+            console.log(err)
+            return null
+        }
+    }
+
     // chatObject has an ID or a username/name
     const onHandleReceiver = (chatObject) => {
         const tempName = currentUser
@@ -137,12 +153,14 @@ function ChatPage(props) {
         // if the name of the user you're talking to doesn't match the current user
         if (name != tempName) {
             messageContainer.current.innerHTML=''
+            setCurrentUser(name)
         }
-        setCurrentUser(name)
         // store name as empty if its private
         chatObject.name=""
         setCurrentChat(chatObject);
     }
+
+
 
     const Sidebar = () => {
         if (ShowFriends) {
@@ -163,18 +181,6 @@ function ChatPage(props) {
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
 
-    const handleAddConvo = async () => {
-        try {
-            const response = await axiosInstance.post(`/api/conversation/`, {
-                name: currentChat.name, 
-                members: currentChat.users
-            })
-            return response.data.chatId;
-        } catch(err) {
-            console.log(err)
-            return null
-        }
-    }
 
     const handleSendMessage = async (e) => {
         e.preventDefault()

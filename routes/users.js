@@ -6,7 +6,7 @@ router.get('/all', async (req, response) => {
     const dbConnect = dbo.getDb();  
     try {
       const user = await dbConnect.collection("user").find({}).project( {username : 1, _id: 1}).toArray();
-      console.log(user)
+      //console.log(user)
       if (!user) {
         response.status(401).send("Not successful");
       } else {
@@ -22,7 +22,7 @@ router.get('/:userId', async (req, response) => {
     const dbConnect = dbo.getDb();  
     try {
       const user = await dbConnect.collection("user").find({_id: req.params.userId});
-      console.log(user)
+      //console.log(user)
       if (!user) {
         response.status(401).send("Not successful");
       } else {

@@ -25,22 +25,30 @@ const searchBar = (props) => {
             }
         }
         getUsers();
-    }, users)
+    }, [auth.username])
 
     // have btoh the sender and reciever id
-    const handleUserClick = (userId, username) => {
+    const handleUserClick = async (userId, username) => {
         // set the current conversation to the userID
         //console.log(userId)
         const user = {userId, username}
-
         const selfname = auth.userId
         const selfusername = auth.username
 
+        let chatId = 0;
+        // find the id of the conversation
+        try {
+            console.log(selfname)
+            console.log(userId)
+            const response = await axiosInstance.get(`/api/conversation/${selfname}/${userId}`);
+            chatId = response.data.chatId;
+        } catch (err) {
+            console.log(err);
+
+        }
         const selfUser = {userId: selfname, username: selfusername}
-        //console.log(selfUser)
         const arrayOfUsers = [user, selfUser]
-        console.log(arrayOfUsers)
-        props.onHandleReceiver({userId: userId, name: username, users: arrayOfUsers});
+        props.onHandleReceiver({chatId: chatId, name: username, users: arrayOfUsers});
     }
 
     return (

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import useAuth from '../hooks/useAuth';
+import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 function HomePage(props) 
 {
     const {setAuth} = useAuth();
@@ -47,7 +48,7 @@ function HomePage(props)
                 <div className="sign-in">
                     <section className="sign-in-page">
                         <div className="title-page">
-                            <h2>Welcome to My-Chat-App</h2>
+                            <h2>Welcome to My-Chat-App <ChatOutlinedIcon fontSize="inherit" /></h2>
                         </div>
                         <div id="Error-Message">
                             {/*Room-name needs to be less than 20 characters*/}
