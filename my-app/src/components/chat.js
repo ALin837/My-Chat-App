@@ -26,7 +26,7 @@ function ChatPage(props) {
     // else try to create a new chat
     const [currentChat, setCurrentChat] = useState({}); 
     const [currentUser, setCurrentUser] = useState("")
-
+    const [newFriend, setNewFriend] = useState(false);
     const [ShowFriends, setShowFriends] = useState(true);
     const navigate = useNavigate();
     const axiosInstance = useAPI();
@@ -115,7 +115,10 @@ function ChatPage(props) {
 
     const DisplayMessage = (name, message) => {
         const current = document.getElementById("current-user").innerHTML;
-        if (name != current) {return;}
+        if (name != current) {
+            setNewFriend(!newFriend);
+            return;
+        }
         const d = new Date();
         const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         const div = document.createElement("div")
@@ -158,6 +161,8 @@ function ChatPage(props) {
         // store name as empty if its private
         chatObject.name=""
         setCurrentChat(chatObject);
+
+        setShowFriends(true);
     }
 
 
@@ -165,7 +170,7 @@ function ChatPage(props) {
     const Sidebar = () => {
         if (ShowFriends) {
             return (
-                <FriendList onHandleReceiver = {onHandleReceiver}/>
+                <FriendList onHandleReceiver = {onHandleReceiver} setNewFriend = {setNewFriend} newFriend = {newFriend} />
             );
         } else {
             return (
@@ -205,6 +210,13 @@ function ChatPage(props) {
                 message: message,
                 chatId: chatId
             })
+
+            if (currentChat.chatId == 0) {
+                setNewFriend(!newFriend);
+            }
+            currentChat.chatId = chatId;
+            setCurrentChat(currentChat);
+
 
             // 3. websocket send/update
             // When 'you' the user sends a message

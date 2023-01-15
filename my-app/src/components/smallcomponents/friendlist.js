@@ -26,13 +26,11 @@ const FriendList = (props) => {
             }
         }
         getUsers();
-    }, [auth.username])
+    }, [props.newFriend])
         // have btoh the sender and reciever id
     const handleUserClick = (chatId, chatName, members) => {
-        console.log(chatName)
         props.onHandleReceiver({chatId: chatId, name: chatName, users: members});
     }
-    console.log("render");
     return (
         <Fragment>
             <div className="user-name">
