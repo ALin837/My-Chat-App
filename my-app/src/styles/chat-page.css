@@ -267,7 +267,7 @@ h2 {
 
 #Submit-message {
     font-family:  var(--fonts);
-    background-color: #9037a1;
+    background-color: var(--mainColour);
     box-sizing: border-box;
     height: 70%;
     color: white;
@@ -280,7 +280,7 @@ h2 {
 }
 
 #Submit-message:hover {
-    background-color: #62286e;
+    background-color: var(--hoverColour);
 }
 
 
@@ -319,7 +319,7 @@ h2 {
     padding: 0.5rem 1rem;
     font-weight: 400;
     font-size: 1rem;
-    background-color: #9037a1;
+    background-color: var(--mainColour);
 }
 
 span {

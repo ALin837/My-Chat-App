@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 .root {
     --fonts: 'Roboto', Arial, Helvetica, sans-serif;
-
+    --mainColour:#b34cb3;
+    --hoverColour: #a33ea3;
 }
 
 
@@ -90,7 +91,7 @@ input[type=password] {
 
 input[type=submit] {
     width: 100%;
-    background-color: #af69af;
+    background-color: var(--mainColour);
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -103,7 +104,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #7e2e7e;
+    background-color: var(--hoverColour);
 }
 
 
