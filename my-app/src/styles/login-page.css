@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+.root {
+    --fonts: 'Roboto', Arial, Helvetica, sans-serif;
 
-#home-login {
-    background-color: rgb(241, 245, 249);
 }
 
 
+
 #Error-Message {
-    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.25rem;
+    font-family: var(--fonts);
+    font-size: 1rem;
     font-weight: 500;
     box-sizing: border-box;
     height: 2rem;
@@ -31,10 +33,11 @@
 .sign-in,
 .register {
     background-color: white;
-    padding: 1rem;
+    padding: 2.5rem;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, .125);
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+    box-shadow: 0px 0px 62px 0px rgb(0 0 0 / 7%);
 }
 
 #register {
@@ -52,25 +55,35 @@ a {
 }
 
 .title-page {
-    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family:var(--fonts);
     font-size: 2rem;
+    text-align: center;
 }
 
 .forms {
-    font-family: 'Yanone Kaffeesatz', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.5rem;
+    font-family: var(--fonts);
+    font-size: 1rem;
     font-weight: 500;
+}
+
+#image {
+    height: 75px;
+}
+.login-title {
+    margin: 10px 0px 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 input[type=text],
 input[type=password] {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     width: 100%;
     padding: 12px 15px;
-    margin: 8px 0;
+    margin: 10px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #e0e0e0;
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -92,6 +105,7 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #7e2e7e;
 }
+
 
 @media only screen and (max-width: 485px) {
     #home-page {

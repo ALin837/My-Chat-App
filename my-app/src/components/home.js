@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import logo from '../images/cover.png';
 function HomePage(props) 
 {
     const {setAuth} = useAuth();
@@ -48,7 +50,8 @@ function HomePage(props)
                 <div className="sign-in">
                     <section className="sign-in-page">
                         <div className="title-page">
-                            <h2>Welcome to My-Chat-App <ChatOutlinedIcon fontSize="inherit" /></h2>
+                            <img id = "image" src = {logo}></img>
+                             <p class="login-title">Log in to MyChatApp</p>
                         </div>
                         <div id="Error-Message">
                             {/*Room-name needs to be less than 20 characters*/}
@@ -58,13 +61,13 @@ function HomePage(props)
                         <div className="forms">
                             {/*Values need to be sent to server. Room must be created and the username must be created as a client*/}
                             <form name="welcome" action="chat_page.html" id="login-section" onSubmit={handleLogin}>
-                            <label htmlFor ="Username">Username:</label><br></br>
-                                <input type="text" id="Username" name="Username" placeholder="Please enter a Username"
+                                <label htmlFor ="Username">Username:</label><br></br>
+                                <input type="text" id="Username" name="Username" placeholder="Username"
                                     autoComplete="off"></input><br></br>
                                 <label htmlFor ="Password">Password:</label><br></br>
-                                <input type="password" id="Password" name="Password" placeholder="Please enter a Password"
+                                <input type="password" id="Password" name="Password" placeholder="Password"
                                     autoComplete="off"></input> <br></br>
-                                <input type="submit" id="Submit" value="Login"></input><br></br>
+                                <input type="submit" id="Submit" value="Log in"></input><br></br>
                             </form>
                         </div>
                     </section>
