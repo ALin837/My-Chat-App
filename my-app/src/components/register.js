@@ -2,6 +2,7 @@ import '../styles/login-page.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import React, { Component }  from 'react';
+import logo from '../images/cover.png';
 function Register(props) {
     const navigate = useNavigate();
     function handleRegister(e) {
@@ -41,7 +42,8 @@ function Register(props) {
                     <div className="sign-in">
                         <section className="sign-in-page">
                             <div className="title-page">
-                                <h2>Create Account Page</h2>
+                                <img id = "image" src = {logo}></img>
+                                 <p class="login-title">Create Account Page</p>
                             </div>
                             <div id="Error-Message">
                                     {/*Room-name needs to be less than 20 characters*/}
