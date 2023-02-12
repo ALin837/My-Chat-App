@@ -21,6 +21,11 @@ const FriendList = (props) => {
             try {
                 const response = await axiosInstance.get(`/api/conversation/${auth.userId}`);
                 setChatList(response.data.conversations);
+                if (response.data.conversations.length != 0) {
+                    props.onHandleReceiver({chatId: response.data.conversations[0]._id, 
+                        name: getChatName(auth.username,response.data.conversations[0].members), 
+                        users: response.data.conversations[0].members});
+                }
             } catch (err) {
                 console.log(err)
             }
@@ -34,8 +39,7 @@ const FriendList = (props) => {
     return (
         <Fragment>
             <div className="user-name">
-                <AccountCircleIcon fontSize="inherit" />
-                Welcome {auth.username} 
+                Chats
             </div>
             <div id="user-list">
             { chatList &&

@@ -1,6 +1,6 @@
 import '../styles/login-page.css'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import React, { Component }  from 'react';
 import logo from '../images/cover.png';
 function Register(props) {
@@ -43,7 +43,7 @@ function Register(props) {
                         <section className="sign-in-page">
                             <div className="title-page">
                                 <img id = "image" src = {logo}></img>
-                                 <p class="login-title">Create Account Page</p>
+                                 <p className="login-title">Create Account Page</p>
                             </div>
                             <div id="Error-Message">
                                     {/*Room-name needs to be less than 20 characters*/}
@@ -54,15 +54,18 @@ function Register(props) {
                                 {/*Values need to be sent to server. Room must be created and the username must be created as a client*/}
                                 <form name="welcome" id="register-section" onSubmit = {handleRegister}>
                                 <label htmlFor ="Username">Username:</label><br></br>
-                                    <input type="text" id="Username" name="Username" placeholder="Please enter a Username"
+                                    <input type="text" id="Username" name="Username" placeholder="Username"
                                         autoComplete="off"></input><br></br>
                                     <label htmlFor ="Password">Password:</label><br></br>
-                                    <input type="password" id="Password" name="Password" placeholder="Please enter a Password"
+                                    <input type="password" id="Password" name="Password" placeholder="Password"
                                         autoComplete="off"></input> <br></br>
-                                    <input type="submit" id="Submit" value="Submit"></input><br></br>
+                                    <input type="submit" id="Submit" value="Sign up"></input><br></br>
                                 </form>
                             </div>
                         </section>
+                    </div>
+                    <div className="register" id="register">
+                        <p> Have an account? <Link to={"/"}><span style={{color: "rgb(0, 149, 246)"}}>Log in</span></Link></p>
                     </div>
                 </div>
             </div>

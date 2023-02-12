@@ -4,8 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import useAuth from '../hooks/useAuth';
-import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import logo from '../images/cover.png';
 function HomePage(props) 
 {
@@ -26,12 +24,9 @@ function HomePage(props)
                         username: username,
                         password: password
                     });
-                    console.log(response)
                     if (response.status === 200) {
                         const accessToken = response.data.token;
                         const userId = response.data.userId;
-                        console.log(accessToken)
-                        console.log(userId)
                         setAuth({username, password, accessToken, userId})
                         return navigate("/chat", { replace: true }); // <-- issue imperative redirect
                     }

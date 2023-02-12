@@ -17,6 +17,15 @@
     color: red;
 }
 
+#Back {
+    font-family: var(--fonts);
+    font-size: 1rem;
+    font-weight: 500;
+    box-sizing: border-box;
+    height: 2rem;
+}
+
+
 #home-page {
     display: flex;
     font-style: normal;
@@ -78,6 +87,7 @@ a {
 
 input[type=text],
 input[type=password] {
+    background-color: rgba(184, 183, 183, 0.07);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     width: 100%;
