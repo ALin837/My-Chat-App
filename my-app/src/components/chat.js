@@ -164,21 +164,6 @@ function ChatPage(props) {
 
         setShowFriends(true);
     }
-
-
-
-    const Sidebar = () => {
-        if (ShowFriends) {
-            return (
-                <FriendList onHandleReceiver = {onHandleReceiver} setNewFriend = {setNewFriend} newFriend = {newFriend} />
-            );
-        } else {
-            return (
-                <SearchBar onHandleReceiver = {onHandleReceiver}/>
-            );
-        }
-    }
-
     const handleLogOut = async () => {
         // set the authenticated user to empty
         setAuth({})
@@ -248,7 +233,10 @@ function ChatPage(props) {
                         </div>
                     </div>
                     <div className="side-bar">
-                        <Sidebar/>
+                        {ShowFriends
+                            ? <FriendList onHandleReceiver = {onHandleReceiver} setNewFriend = {setNewFriend} newFriend = {newFriend} />
+                            : <SearchBar onHandleReceiver = {onHandleReceiver}/>
+                        }
                         
                     </div>
                     <div className="Chat-Display">
