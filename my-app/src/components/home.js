@@ -51,7 +51,7 @@ function HomePage(props)
                     <section className="sign-in-page">
                         <div className="title-page">
                             <img id = "image" src = {logo}></img>
-                             <p class="login-title">Log in to MyChatApp</p>
+                             <p className="login-title">Log in to MyChatApp</p>
                         </div>
                         <div id="Error-Message">
                             {/*Room-name needs to be less than 20 characters*/}

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import HomePage from './components/home'
 import Register from './components/register'
 import ChatPage from './components/chat'
