@@ -46,12 +46,16 @@ app.use(cookieParser())
 app.use(allow)
 app.use(cors(corsOptions))
 
+
+app.get("/",(req, res) => {
+    res.json("Hello")
+})
 // Routes
 app.use('/api/register', register)
 app.use('/api/refresh', refresh)
 app.use('/api/logout', logout)
 app.use('/api/login', login)
-app.use(authenticate)
+//app.use(authenticate)
 app.use('/api/users', users)
 app.use('/api/conversation', conversation)
 app.use('/api/messages', messages)
