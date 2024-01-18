@@ -43,10 +43,10 @@ app.use(cookieParser())
 
 // cors
 // use cors
-//app.use(allow)
-//app.use(cors(corsOptions))
+app.use(allow)
+app.use(cors(corsOptions))
 
-
+/*
 app.use(cors(
     {
         origin: [
@@ -58,7 +58,7 @@ app.use(cors(
         credentials: true
     }
 ))
-
+*/
 app.get("/",(req, res) => {
     res.json("Hello")
 })

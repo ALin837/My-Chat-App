@@ -1,7 +1,7 @@
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:9000/',
-    process.env.CLIENT
+    'https://mychatapp-rho.vercel.app'
 ]
 
 module.exports = allowedOrigins;
