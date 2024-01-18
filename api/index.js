@@ -31,10 +31,7 @@ const allow = require("./middleware/allow")
 //app.use(allow)
 //app.use(cors(corsOptions))
 const corsOptionsa = {
-    origin: [
-        'http://localhost:3000',
-        'https://mychatapp-rho.vercel.app'
-    ],
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
