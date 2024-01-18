@@ -12,7 +12,6 @@ function getChatName(username,members) {
     }
 }
 const FriendList = (props) => {
-    const [chatList, setChatList] = useState([])
     const {auth} = useAuth();
     const axiosInstance = useAPI()
     // fetch all the users
@@ -20,19 +19,16 @@ const FriendList = (props) => {
         const getUsers = async ()=> {
             try {
                 const response = await axiosInstance.get(`/api/conversation/${auth.userId}`);
-                setChatList(response.data.conversations);
-                if (response.data.conversations.length != 0) {
-                    props.onHandleReceiver({chatId: response.data.conversations[0]._id, 
-                        name: getChatName(auth.username,response.data.conversations[0].members), 
-                        users: response.data.conversations[0].members});
-                }
+                props.setChatList(response.data.conversations);
             } catch (err) {
                 console.log(err)
             }
         }
         getUsers();
-    }, [props.newFriend])
-        // have btoh the sender and reciever id
+    }, [props.chatList])
+
+
+    // have both the sender and reciever id
     const handleUserClick = (chatId, chatName, members) => {
         props.onHandleReceiver({chatId: chatId, name: chatName, users: members});
     }
@@ -42,8 +38,8 @@ const FriendList = (props) => {
                 Chats
             </div>
             <div id="user-list">
-            { chatList &&
-                chatList
+            { props.chatList &&
+                props.chatList
                 .map((item, index)=> (  // (chat ID gets put in, along with the chat name) 
                     <div key = {index} className="user" onClick= {() => {handleUserClick(item._id, getChatName(auth.username,item.members), item.members)}}>
                         <PersonIcon fontSize="inherit" /> {getChatName(auth.username,item.members)}

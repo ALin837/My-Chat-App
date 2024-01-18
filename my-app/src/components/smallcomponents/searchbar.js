@@ -38,8 +38,6 @@ const searchBar = (props) => {
         let chatId = 0;
         // find the id of the conversation
         try {
-            console.log(selfname)
-            console.log(userId)
             const response = await axiosInstance.get(`/api/conversation/${selfname}/${userId}`);
             chatId = response.data.chatId;
         } catch (err) {

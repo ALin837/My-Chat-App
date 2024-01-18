@@ -10,8 +10,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import useAPI from '../hooks/useApi'
+import { useWebSocket } from '../context/socketProvider';
 //chat messaging
-import { io } from "socket.io-client";
 
 function getChatName(username,members) {
     if (members.length == 2) {
@@ -21,12 +21,13 @@ function getChatName(username,members) {
 }
 
 function ChatPage(props) {
-    const [socket, setSocket] = useState(null);
+    const socket = useWebSocket()
     // use the chat id. If the id is in the auth's conversations then default to that
     // else try to create a new chat
+    const [chatList, setChatList] = useState([])
+    // currentChat is an object with chatId, name : "", users [{userid: ssd, username},{userid: ssd, username}]
     const [currentChat, setCurrentChat] = useState({}); 
     const [currentUser, setCurrentUser] = useState("")
-    const [newFriend, setNewFriend] = useState(false);
     const [ShowFriends, setShowFriends] = useState(true);
     const navigate = useNavigate();
     const axiosInstance = useAPI();
@@ -34,21 +35,19 @@ function ChatPage(props) {
 
     const [activeUserList, setActiveUserList] = useState([])
     const messageContainer = useRef(null)
-    useEffect(()=> {
-        setSocket(io('http://localhost:3000'))
-    }, [])
+
     useEffect(()=> {
         if (socket) {
             const username = auth.username
             socket.emit('joinRoom', {username});
             socket.on('message', (response)=> {
+                 // recieve message
                 DisplayMessage(response.name, response.message)
             })
             socket.on('userlist', (response) => {
                 setActiveUserList(response)
             })
         }
-        
     }, [socket])
 
     const printDataOnScreen = (arrOfMessages) => 
@@ -59,15 +58,15 @@ function ChatPage(props) {
         const current = document.getElementById("current-user").innerHTML;
         for (let i = 0; i < arrOfMessages.length; ++i) {
             if (userId == arrOfMessages[i]["sender"]) {
-                userDisplayMessage(username, arrOfMessages[i]["message"], false);
+                userDisplayMessage(username, arrOfMessages[i], false);
             } else {
-                DisplayMessage(current,arrOfMessages[i]["message"]);
+                console.log(arrOfMessages[i])
+                DisplayMessage(current,arrOfMessages[i]);
             }
         }
     }
 
     useEffect(()=> {
-        
         const getMessages = async ()=> {
             if (currentChat.chatId) {
                 try {
@@ -76,7 +75,6 @@ function ChatPage(props) {
                     printDataOnScreen(response.data.chat)
                 } catch (err) {
                     console.log(err)
-                    // print no data on teh screen
                 }
             }
         }
@@ -84,14 +82,15 @@ function ChatPage(props) {
     }, [currentChat.chatId])
 
     // userdisplay your own message and send message
-    const userDisplayMessage = (name, message, doEmit) => {
-        const d = new Date();
-        const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    const userDisplayMessage = (name, messageObj, doEmit) => {
+        const message = messageObj["message"]
+        const time = messageObj["time"]
         if (doEmit) {
             //Emit message
             const senderID = socket.id
             // get the id of the person you want to send to
             const result = activeUserList.filter((item) => item.username == currentUser)
+            console.log(result)
             let receiverID = 0;
             if (result.length == 1) {
                 receiverID = result[0].id
@@ -101,7 +100,7 @@ function ChatPage(props) {
         const userdiv = document.createElement("div")
         userdiv.classList.add('user-message');
         userdiv.innerHTML = `<div class="user-messenger">
-            ${name}&nbsp;<span>${event}</span>
+            ${name}&nbsp;<span>${time}</span>
             </div>
                 <div class="user-messenge-box">
                 <p class="user-message-content">
@@ -114,21 +113,19 @@ function ChatPage(props) {
     }
 
     const DisplayMessage = (name, message) => {
+        const time = message["time"]
         const current = document.getElementById("current-user").innerHTML;
         if (name != current) {
-            setNewFriend(!newFriend);
             return;
         }
-        const d = new Date();
-        const event = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         const div = document.createElement("div")
         div.classList.add('message');
         div.innerHTML = `<div class="messenger">
-            ${name} &nbsp;<span>${event}</span>
+            ${name} &nbsp;<span>${time}</span>
             </div>
             <div class="messenge-box">
                 <p class="message-content">
-                    ${message}
+                    ${message["message"]}
                 </p>
             </div>`
         messageContainer.current.appendChild(div);
@@ -143,27 +140,32 @@ function ChatPage(props) {
             })
             return response.data.chatId;
         } catch(err) {
-            console.log(err)
             return null
         }
     }
 
     // chatObject has an ID or a username/name
     const onHandleReceiver = (chatObject) => {
-        const tempName = currentUser
-        // gets the chat name between a private conversation
-        const name = getChatName(auth.username, chatObject.users)
-        // if the name of the user you're talking to doesn't match the current user
-        if (name != tempName) {
+        if (chatObject.chatId) {
+            const tempName = currentUser
+            const name = getChatName(auth.username, chatObject.users)
+            // if the name of the user you're talking to doesn't match the searched user
+            if (name != tempName) {
+                messageContainer.current.innerHTML=''
+                setCurrentUser(name)
+            }
+        } else {
+            // gets the chat name between a private conversation
+            const name = getChatName(auth.username, chatObject.users)
             messageContainer.current.innerHTML=''
             setCurrentUser(name)
         }
         // store name as empty if its private
-        chatObject.name=""
+        chatObject.name = ""
         setCurrentChat(chatObject);
-
         setShowFriends(true);
     }
+
     const handleLogOut = async () => {
         // set the authenticated user to empty
         setAuth({})
@@ -171,47 +173,49 @@ function ChatPage(props) {
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
 
-
     const handleSendMessage = async (e) => {
         e.preventDefault()
         const message = document.getElementById('message-form').value;
+        // no user to send to
         if (message=="" || currentUser == "") {
             return 
         }
         //const message = chatInput;
         const date = new Date();
-        const local = date.toLocaleTimeString('en-US')
+        let formattedDate = date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        });
         try {
             // check if its a userid or a chat id. Chat id requires 
             // 1. we have the current chat so it should be fine.
             // we create the conversation and get the id back.
             let chatId = await handleAddConvo()
 
-            // 2. post the message to the db
-            const response = await axiosInstance.post('/api/messages/', {
+            const messageObj = {
                 sender: auth.userId,
                 members: currentChat.users,
-                time: local,
+                time: formattedDate,
                 message: message,
                 chatId: chatId
-            })
-
-            if (currentChat.chatId == 0) {
-                setNewFriend(!newFriend);
             }
+            
+            // 2. post the message to the db
+            await axiosInstance.post('/api/messages/', messageObj)
+            console.log(currentChat)
             currentChat.chatId = chatId;
             setCurrentChat(currentChat);
 
-
+            setShowFriends(true)
             // 3. websocket send/update
-            // When 'you' the user sends a message
-            userDisplayMessage(auth.username, message,true)
+            userDisplayMessage(auth.username, messageObj, true)
             document.getElementById('message-form').value = "";
         } catch(err) {
-            // this should handle the submission and if you submit while the
-            // refresh token has expired then you logout
             console.log(err)
-            //return navigate("/", { replace: true }); // <-- issue imperative redirect
         }
     }
 
@@ -234,7 +238,7 @@ function ChatPage(props) {
                     </div>
                     <div className="side-bar">
                         {ShowFriends
-                            ? <FriendList onHandleReceiver = {onHandleReceiver} setNewFriend = {setNewFriend} newFriend = {newFriend} />
+                            ? <FriendList onHandleReceiver = {onHandleReceiver} setChatList = {setChatList} chatList = {chatList} />
                             : <SearchBar onHandleReceiver = {onHandleReceiver}/>
                         }
                         
