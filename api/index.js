@@ -43,9 +43,21 @@ app.use(cookieParser())
 
 // cors
 // use cors
-app.use(allow)
-app.use(cors(corsOptions))
+//app.use(allow)
+//app.use(cors(corsOptions))
 
+
+app.use(cors(
+    {
+        origin: [
+            'http://localhost:3000',
+            'http://localhost:9000/',
+            process.env.CLIENT
+        ],
+        methods:["POST", "GET"],
+        credentials: true
+    }
+))
 
 app.get("/",(req, res) => {
     res.json("Hello")
