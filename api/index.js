@@ -28,8 +28,19 @@ const authenticate = require("./middleware/authenticate")
 const allow = require("./middleware/allow")
 // cors
 // use cors
-app.use(allow)
-app.use(cors(corsOptions))
+//app.use(allow)
+//app.use(cors(corsOptions))
+const corsOptionsa = {
+    origin: [
+        'http://localhost:3000',
+        'https://mychatapp-rho.vercel.app'
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+  };
+  
+  app.use(cors(corsOptionsa));
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
