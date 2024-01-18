@@ -60,7 +60,6 @@ function ChatPage(props) {
             if (userId == arrOfMessages[i]["sender"]) {
                 userDisplayMessage(username, arrOfMessages[i], false);
             } else {
-                console.log(arrOfMessages[i])
                 DisplayMessage(current,arrOfMessages[i]);
             }
         }
@@ -90,7 +89,6 @@ function ChatPage(props) {
             const senderID = socket.id
             // get the id of the person you want to send to
             const result = activeUserList.filter((item) => item.username == currentUser)
-            console.log(result)
             let receiverID = 0;
             if (result.length == 1) {
                 receiverID = result[0].id
@@ -206,7 +204,6 @@ function ChatPage(props) {
             
             // 2. post the message to the db
             await axiosInstance.post('/api/messages/', messageObj)
-            console.log(currentChat)
             currentChat.chatId = chatId;
             setCurrentChat(currentChat);
 

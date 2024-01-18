@@ -1,6 +1,6 @@
 // refer to https://www.mongodb.com/languages/express-mongodb-rest-api-tutorial when deploying to atlas
 const { MongoClient } = require("mongodb");
-const connectionString = "mongodb://localhost:27017"; // process.env.ATLAS_URI;
+const connectionString = process.env.MONGODB_URL || "mongodb://localhost:27017";
 const client = new MongoClient(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
