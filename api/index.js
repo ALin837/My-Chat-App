@@ -51,8 +51,8 @@ app.use(cors(
     {
         origin: [
             'http://localhost:3000',
-            'http://localhost:9000/',
-            process.env.CLIENT
+            'http://localhost:9000',
+            'https://mychatapp-rho.vercel.app'
         ],
         methods:["POST", "GET"],
         credentials: true
