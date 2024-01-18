@@ -1,11 +1,18 @@
 const express = require('express');
 const http = require('http');
-const socketio = require('socket.io');
+const { Server } = require("socket.io");
 const app = express(); // initializes an express server
 const port =  process.env.PORT || 9000;
 const {createAndAddUser, getUser, deleteUser, getUsers, containUser} = require('./utils/users')
 const server = http.createServer(app);
-const io = socketio(server)
+const allowedOrigins = require('../api/config/allowed')
+const io = new Server(server, {
+	cors: {
+		origin: allowedOrigins,
+		methods: ["GET", "POST"],
+	},
+});
+
 const dbo = require('./utils/conn')
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser")
@@ -28,16 +35,9 @@ const authenticate = require("./middleware/authenticate")
 const allow = require("./middleware/allow")
 // cors
 // use cors
-//app.use(allow)
-//app.use(cors(corsOptions))
-const corsOptionsa = {
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204,
-  };
-  
-  app.use(cors(corsOptionsa));
+app.use(allow)
+app.use(cors(corsOptions))
+
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
