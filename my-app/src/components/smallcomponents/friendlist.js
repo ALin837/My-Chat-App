@@ -6,7 +6,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useAuth from '../../hooks/useAuth';
 import '../../styles/chat-page.css'
 import useAPI from '../../hooks/useApi'
-const baseURLinstance = process.env.REACT_APP_API_URL || "http://localhost:9000";
 function getChatName(username,members) {
     if (members.length == 2) {
         const result = members.filter(item => (item.username != username))
@@ -21,7 +20,7 @@ const FriendList = (props) => {
     useEffect(()=> {
         const getUsers = async ()=> {
             try {
-                const response = await axiosInstance.get(baseURLinstance + `/api/conversation/${auth.userId}`);
+                const response = await axiosInstance.get(`/api/conversation/${auth.userId}`);
                 props.setChatList(response.data.conversations);
             } catch (err) {
                 console.log(err)

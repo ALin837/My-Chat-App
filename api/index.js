@@ -12,6 +12,8 @@ const cookieParser = require("cookie-parser")
 const cors = require('cors')
 const corsOptions = require('./config/corsoptions')
 dbo.connectToServer(()=>{})
+
+
 // routes
 const register = require("./routes/register")
 const login = require("./routes/login")
@@ -24,7 +26,10 @@ const refresh = require("./routes/refresh")
 // middleware
 const authenticate = require("./middleware/authenticate")
 const allow = require("./middleware/allow")
-
+// cors
+// use cors
+app.use(allow)
+app.use(cors(corsOptions))
 /** bodyParser.urlencoded(options)
  * Parses the text as URL encoded data (which is how browsers tend to send form data from regular forms set to POST)
  * and exposes the resulting object (containing the keys and values) on req.body
@@ -40,25 +45,6 @@ app.use(express.json());
 
 // use cookies
 app.use(cookieParser())
-
-// cors
-// use cors
-app.use(allow)
-app.use(cors(corsOptions))
-
-/*
-app.use(cors(
-    {
-        origin: [
-            'http://localhost:3000',
-            'http://localhost:9000',
-            'https://mychatapp-rho.vercel.app'
-        ],
-        methods:["POST", "GET"],
-        credentials: true
-    }
-))
-*/
 app.get("/",(req, res) => {
     res.json("Hello")
 })
@@ -71,10 +57,7 @@ app.use(authenticate)
 app.use('/api/users', users)
 app.use('/api/conversation', conversation)
 app.use('/api/messages', messages)
-
-
 //Run when the client connects
-
 io.on('connection', (socket) => {
     console.log("user has connected with" + socket.id)
     socket.on('joinRoom', ({username}) => {

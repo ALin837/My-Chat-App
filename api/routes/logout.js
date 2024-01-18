@@ -22,12 +22,12 @@ router.get('/', async (req, res) => {
         const foundUser = await dbConnect.collection("user").findOne({refreshToken: {$eq: reFreshToken}})
         console.log(foundUser)
         if (!foundUser) {
-            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'None'});
+            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None'});
             console.log("cleared refresh Token");
             return res.sendStatus(204)
         }
         deleteRefreshToken(foundUser.username)
-        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: false, sameSite: 'None'});
+        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None'});
         console.log("cleared refresh Token");
         return res.sendStatus(204)
     } catch {

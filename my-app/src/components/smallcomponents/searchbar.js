@@ -6,8 +6,6 @@ import useAPI from '../../hooks/useApi'
 import axios from 'axios';
 import '../../styles/chat-page.css'
 const MAX_USERS_SHOWN = 8;
-const baseURLinstance = process.env.REACT_APP_API_URL || "http://localhost:9000";
-
 const searchBar = (props) => {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -18,7 +16,7 @@ const searchBar = (props) => {
     useEffect(()=> {
         const getUsers = async ()=> {
             try {
-                const response = await axiosInstance.get(baseURLinstance+'/api/users/all');
+                const response = await axiosInstance.get('/api/users/all');
                 const result = response.data.users.filter(item => item.username != auth.username)
                 setUsers(result);
             } catch (err) {
@@ -39,7 +37,7 @@ const searchBar = (props) => {
         let chatId = 0;
         // find the id of the conversation
         try {
-            const response = await axiosInstance.get(baseURLinstance+`/api/conversation/${selfname}/${userId}`);
+            const response = await axiosInstance.get(`/api/conversation/${selfname}/${userId}`);
             chatId = response.data.chatId;
         } catch (err) {
             console.log(err);
