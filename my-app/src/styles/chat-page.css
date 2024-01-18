@@ -63,18 +63,22 @@ a {
 .chat-portion {
     height: 100%;
     display: grid;
-    grid-template-columns: 3% 20% 77%;
+    grid-template-columns: 60px 500px auto;
     box-sizing: border-box;
 }
 
 /*Short term fix make side bar disappear on Mobile*/
 @media only screen and (max-width:1100px) {
-    .side-bar {
-        display: none;
+    .chat-portion {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 60px 25% auto;
+        box-sizing: border-box;
     }
-
-    .Chat-Display {
-        width: 100vw;
+    .navigation-bar {
+        width: 100%;
+        height: auto;
+        position: relative;
     }
 }
 
@@ -82,14 +86,12 @@ a {
     box-sizing: border-box;
     background-color: white;
     height: 100vh;
+    width: 100%;
     border-right: 1px solid rgba(0, 0, 0, .125);
 
 }
 
 .navigation-bar {
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
     background-color: white;
     height: 100vh;
     border-right: 1px solid rgba(0, 0, 0, .125);
@@ -126,6 +128,7 @@ a {
 
 .user {
     display: flex;
+    width: 100%;
     justify-content: left;
     align-items: center;
     padding: 1rem;
@@ -246,7 +249,7 @@ h2 {
 
 #chat-form {
     display: grid;
-    grid-template-columns: 95% 5%;
+    grid-template-columns: auto 80px;
     column-gap: 1%;
     width: 100%;
     align-items: center;
@@ -327,24 +330,6 @@ h2 {
 span {
     color: #555;
     font-weight: 400;
-}
-
-
-@media only screen and (max-width:1500px) {
-
-    #chat-form {
-        display: grid;
-        grid-template-columns: 90% 10%;
-
-    }
-}
-
-@media only screen and (max-width:500px) {
-
-    #chat-form {
-        display: grid;
-        grid-template-columns: 80% 20%;
-    }
 }
 
 .input-search-bar {
