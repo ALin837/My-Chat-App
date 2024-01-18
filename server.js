@@ -73,15 +73,24 @@ io.on('connection', (socket) => {
 
 
     socket.on('chat message', ({senderID, receiverID, message}) => {
-        console.log(message)
-        console.log(receiverID)
-        console.log(senderID)
         const receiver = getUser(receiverID);
         const sender = getUser(senderID);
-        console.log(receiver)
-        console.log(sender)
+        const date = new Date();
+        let local = date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        });
+        const messageObj = {
+            time: local,
+            message: message,
+        }
+
         if (receiver && sender) {
-            io.to(receiver.id).emit("message", {name: sender.username, message: message});
+            io.to(receiver.id).emit("message", {name: sender.username, message: messageObj});
         }
     })
     

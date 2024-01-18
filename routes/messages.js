@@ -33,6 +33,7 @@ router.get('/:chatId',  async (req, response) => {
         if (!chatMessages) {
             response.status(401).send("No chat exists with chatId:"+ chatId);
         }
+        console.log(chatMessages)
         response.status(200).json({chat: chatMessages})
     } catch {
         response.status(500).send("Error");
