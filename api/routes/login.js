@@ -36,9 +36,8 @@ router.post('/user', async (req, response) => {
               let refreshToken = jwt.sign({username: username}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '24h'})
               // stores the refresh token into the database to cross reference
               helper(username, refreshToken);
-              response.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: false})
+              response.cookie('jwt', refreshToken, {httpOnly: true, sameSite : "None", maxAge: 24 * 60 * 60 * 1000, secure: true})
               // returns the accesstoken to the client
-              console.log(user._id.valueOf())
               response.status(200).json(
                 {
                   message:"Login Successful! Redirecting User...",
