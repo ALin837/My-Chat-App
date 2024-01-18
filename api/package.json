@@ -22,7 +22,7 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.1",
-    "mongodb": "4.13",
+    "mongodb": "^4.17.2",
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
