@@ -9,6 +9,7 @@ const baseURLinstance = process.env.API_URL || "http://localhost:9000";
 
 function HomePage(props) 
 {
+    axios.defaults.withCredentials = true;
     const {setAuth} = useAuth();
     const navigate = useNavigate();
     function handleLogin(e) {

@@ -6,6 +6,7 @@ import logo from '../images/cover.png';
 const baseURLinstance = process.env.API_URL || "http://localhost:9000";
 
 function Register(props) {
+    axios.defaults.withCredentials = true;
     const navigate = useNavigate();
     function handleRegister(e) {
         e.preventDefault();
