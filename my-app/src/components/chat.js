@@ -33,9 +33,9 @@ function ChatPage(props) {
     const [currentUser, setCurrentUser] = useState("")
     const [ShowFriends, setShowFriends] = useState(true);
     const navigate = useNavigate();
-    //const axiosInstance = useAPI();
+    const axiosInstance = useAPI();
     const {auth,setAuth} = useAuth();
-    axios.defaults.withCredentials = true;
+    //axios.defaults.withCredentials = true;
     const [activeUserList, setActiveUserList] = useState([])
     const messageContainer = useRef(null)
 
@@ -73,7 +73,7 @@ function ChatPage(props) {
             if (currentChat.chatId) {
                 try {
                     const chatId = currentChat.chatId;
-                    const response = await axios.get(baseURLinstance + `/api/messages/${chatId}`);
+                    const response = await axiosInstance.get(baseURLinstance + `/api/messages/${chatId}`);
                     printDataOnScreen(response.data.chat)
                 } catch (err) {
                     console.log(err)
@@ -135,7 +135,7 @@ function ChatPage(props) {
 
     const handleAddConvo = async () => {
         try {
-            const response = await axios.post(baseURLinstance + `/api/conversation/`, {
+            const response = await axiosInstance.post(baseURLinstance + `/api/conversation/`, {
                 name: currentChat.name, 
                 members: currentChat.users
             })
@@ -170,7 +170,7 @@ function ChatPage(props) {
     const handleLogOut = async () => {
         // set the authenticated user to empty
         setAuth({})
-        await axios.get(baseURLinstance + '/api/logout');
+        await axiosInstance.get(baseURLinstance + '/api/logout');
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
 
@@ -206,7 +206,7 @@ function ChatPage(props) {
             }
             
             // 2. post the message to the db
-            await axios.post(baseURLinstance + '/api/messages/', messageObj)
+            await axiosInstance.post(baseURLinstance + '/api/messages/', messageObj)
             currentChat.chatId = chatId;
             setCurrentChat(currentChat);
 

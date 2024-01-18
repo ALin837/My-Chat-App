@@ -14,14 +14,14 @@ function getChatName(username,members) {
     }
 }
 const FriendList = (props) => {
-    axios.defaults.withCredentials = true;
+    //axios.defaults.withCredentials = true;
     const {auth} = useAuth();
-    //const axiosInstance = useAPI()
+    const axiosInstance = useAPI()
     // fetch all the users
     useEffect(()=> {
         const getUsers = async ()=> {
             try {
-                const response = await axios.get(baseURLinstance + `/api/conversation/${auth.userId}`);
+                const response = await axiosInstance.get(baseURLinstance + `/api/conversation/${auth.userId}`);
                 props.setChatList(response.data.conversations);
             } catch (err) {
                 console.log(err)
