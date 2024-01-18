@@ -14,7 +14,7 @@ import { useWebSocket } from '../context/socketProvider';
 //chat messaging
 import axios from 'axios';
 
-const baseURLinstance = process.env.REACT_APP_API_URL //|| "http://localhost:9000";
+const baseURLinstance = process.env.REACT_APP_API_URL || "http://localhost:9000";
 
 function getChatName(username,members) {
     if (members.length == 2) {

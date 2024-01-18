@@ -6,7 +6,7 @@ import useAPI from '../../hooks/useApi'
 import axios from 'axios';
 import '../../styles/chat-page.css'
 const MAX_USERS_SHOWN = 8;
-const baseURLinstance = process.env.REACT_APP_API_URL //|| "http://localhost:9000";
+const baseURLinstance = process.env.REACT_APP_API_URL || "http://localhost:9000";
 
 const searchBar = (props) => {
     const [users, setUsers] = useState([]);

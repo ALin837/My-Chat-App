@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import logo from '../images/cover.png';
-const baseURLinstance = process.env.REACT_APP_API_URL //|| "http://localhost:9000";
+const baseURLinstance = process.env.REACT_APP_API_URL || "http://localhost:9000";
 
 function HomePage(props) 
 {
