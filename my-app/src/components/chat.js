@@ -35,7 +35,6 @@ function ChatPage(props) {
     const navigate = useNavigate();
     const axiosInstance = useAPI();
     const {auth,setAuth} = useAuth();
-    //axios.defaults.withCredentials = true;
     const [activeUserList, setActiveUserList] = useState([])
     const messageContainer = useRef(null)
 
@@ -73,7 +72,7 @@ function ChatPage(props) {
             if (currentChat.chatId) {
                 try {
                     const chatId = currentChat.chatId;
-                    const response = await axiosInstance.get(baseURLinstance + `/api/messages/${chatId}`);
+                    const response = await axiosInstance.get(`/api/messages/${chatId}`);
                     printDataOnScreen(response.data.chat)
                 } catch (err) {
                     console.log(err)
@@ -135,7 +134,7 @@ function ChatPage(props) {
 
     const handleAddConvo = async () => {
         try {
-            const response = await axiosInstance.post(baseURLinstance + `/api/conversation/`, {
+            const response = await axiosInstance.post(`/api/conversation/`, {
                 name: currentChat.name, 
                 members: currentChat.users
             })
@@ -170,7 +169,7 @@ function ChatPage(props) {
     const handleLogOut = async () => {
         // set the authenticated user to empty
         setAuth({})
-        await axiosInstance.get(baseURLinstance + '/api/logout');
+        await axiosInstance.get('/api/logout');
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
 
@@ -206,7 +205,7 @@ function ChatPage(props) {
             }
             
             // 2. post the message to the db
-            await axiosInstance.post(baseURLinstance + '/api/messages/', messageObj)
+            await axiosInstance.post('/api/messages/', messageObj)
             currentChat.chatId = chatId;
             setCurrentChat(currentChat);
 

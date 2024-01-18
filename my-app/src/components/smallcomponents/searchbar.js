@@ -18,7 +18,7 @@ const searchBar = (props) => {
     useEffect(()=> {
         const getUsers = async ()=> {
             try {
-                const response = await axiosInstance.get(baseURLinstance+'/api/users/all');
+                const response = await axiosInstance.get('/api/users/all');
                 const result = response.data.users.filter(item => item.username != auth.username)
                 setUsers(result);
             } catch (err) {

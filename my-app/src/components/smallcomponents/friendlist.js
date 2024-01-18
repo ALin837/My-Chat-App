@@ -21,7 +21,7 @@ const FriendList = (props) => {
     useEffect(()=> {
         const getUsers = async ()=> {
             try {
-                const response = await axiosInstance.get(baseURLinstance + `/api/conversation/${auth.userId}`);
+                const response = await axiosInstance.get(`/api/conversation/${auth.userId}`);
                 props.setChatList(response.data.conversations);
             } catch (err) {
                 console.log(err)

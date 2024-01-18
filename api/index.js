@@ -45,7 +45,6 @@ app.use(cookieParser())
 // use cors
 app.use(allow)
 app.use(cors(corsOptions))
-
 /*
 app.use(cors(
     {
