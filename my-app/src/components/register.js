@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import React, { Component }  from 'react';
 import logo from '../images/cover.png';
+const baseURLinstance = process.env.API_URL || "http://localhost:9000";
+
 function Register(props) {
     const navigate = useNavigate();
     function handleRegister(e) {
@@ -19,7 +21,7 @@ function Register(props) {
             const password = document.querySelector('#Password').value
             const userRegister =  async (username, password, navigate) => {
                 try {
-                    const response = await axios.post('/api/register/user',
+                    const response = await axios.post(baseURLinstance + '/api/register/user',
                     {
                         username: username,
                         password: password

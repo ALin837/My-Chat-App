@@ -13,6 +13,9 @@ import useAPI from '../hooks/useApi'
 import { useWebSocket } from '../context/socketProvider';
 //chat messaging
 
+
+const baseURLinstance = process.env.API_URL || "http://localhost:9000";
+
 function getChatName(username,members) {
     if (members.length == 2) {
         const result = members.filter(item => (item.username != username))
@@ -70,7 +73,7 @@ function ChatPage(props) {
             if (currentChat.chatId) {
                 try {
                     const chatId = currentChat.chatId;
-                    const response = await axiosInstance.get(`/api/messages/${chatId}`);
+                    const response = await axiosInstance.get(baseURLinstance + `/api/messages/${chatId}`);
                     printDataOnScreen(response.data.chat)
                 } catch (err) {
                     console.log(err)
@@ -132,7 +135,7 @@ function ChatPage(props) {
 
     const handleAddConvo = async () => {
         try {
-            const response = await axiosInstance.post(`/api/conversation/`, {
+            const response = await axiosInstance.post(baseURLinstance + `/api/conversation/`, {
                 name: currentChat.name, 
                 members: currentChat.users
             })
@@ -167,7 +170,7 @@ function ChatPage(props) {
     const handleLogOut = async () => {
         // set the authenticated user to empty
         setAuth({})
-        await axiosInstance.get('/api/logout');
+        await axiosInstance.get(baseURLinstance + '/api/logout');
         return navigate("/", { replace: true }); // <-- issue imperative redirect
     }
 
@@ -203,7 +206,7 @@ function ChatPage(props) {
             }
             
             // 2. post the message to the db
-            await axiosInstance.post('/api/messages/', messageObj)
+            await axiosInstance.post(baseURLinstance + '/api/messages/', messageObj)
             currentChat.chatId = chatId;
             setCurrentChat(currentChat);
 

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import logo from '../images/cover.png';
+const baseURLinstance = process.env.API_URL || "http://localhost:9000";
+
 function HomePage(props) 
 {
     const {setAuth} = useAuth();
@@ -19,7 +21,7 @@ function HomePage(props)
             const password = document.querySelector('#Password').value
             const userRegister =  async (username, password, navigate) => {
                 try {
-                    const response = await axios.post('/api/login/user',
+                    const response = await axios.post(baseURLinstance + '/api/login/user',
                     {
                         username: username,
                         password: password
