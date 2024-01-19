@@ -1,6 +1,6 @@
 const allowedOrigins = [
-    'http://localhost:3000',
-    'https://mychatapp-rho.vercel.app'
+    //'http://localhost:3000',
+    'https://mychatapp-xqyr.onrender.com'
 ]
 
 module.exports = allowedOrigins;
