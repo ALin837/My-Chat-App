@@ -5,6 +5,10 @@ const bcryptjs = require('bcryptjs')
 var router = express.Router();
 
 router.post('/user', async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
     const dbConnect = dbo.getDb();  
     const encryptedPassword =  await bcryptjs.hash(req.body.password, CONSTANTS.SALT_ROUNDS);
     const matchUser = {

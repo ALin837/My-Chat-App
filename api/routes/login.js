@@ -20,6 +20,10 @@ router.post('/user', async (req, response) => {
     const dbConnect = dbo.getDb();  
     var username = req.body.username;
     var password = req.body.password;
+    response.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Max-Age", "1800");
+    response.setHeader("Access-Control-Allow-Headers", "content-type");
     try {
       const user = await dbConnect.collection("user").findOne({username: username})
       if (!user) {
