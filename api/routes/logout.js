@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");
     // client side, delete access Token
     const dbConnect = dbo.getDb();  
     const cookies = req.cookies
