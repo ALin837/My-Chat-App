@@ -4,6 +4,10 @@ var router = express.Router();
 
 // This method takes a sender and reciever and creates a new conversation in the database
 router.post('/',  async (req, response) => {
+    response.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Max-Age", "1800");
+    response.setHeader("Access-Control-Allow-Headers", "content-type");
     const dbConnect = dbo.getDb();  
     const conversation = {
         name: req.body.name, // on default it will be the persons name that you want to talk to
@@ -32,6 +36,10 @@ router.post('/',  async (req, response) => {
 
 // This method takes a userId and a second user id and returns all the conversations based off of that
 router.get('/:user1Id/:user2Id', async (req, response) => {
+    response.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Max-Age", "1800");
+    response.setHeader("Access-Control-Allow-Headers", "content-type");
     const dbConnect = dbo.getDb();  
     const receiver = req.params.user1Id;
     const sender = req.params.user2Id;
@@ -53,6 +61,10 @@ router.get('/:user1Id/:user2Id', async (req, response) => {
 
 // This method takes a userId and returns all the conversations based off of that
 router.get('/:userId', async (req, response) => {
+    response.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Max-Age", "1800");
+    response.setHeader("Access-Control-Allow-Headers", "content-type");
     const dbConnect = dbo.getDb();  
     try {
         const conversations = await dbConnect.collection("conversations").find({
