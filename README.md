@@ -7,7 +7,10 @@ my database to store conversations and messages.
 
 
 
-https://github.com/ALin837/My-Chat-App/assets/77423271/aab38dd8-99ee-428a-b0d4-ce93e21373a9
+https://github.com/ALin837/My-Chat-App/assets/77423271/e11070d8-7996-4328-ae3c-00911d6fa7a4
+
+
+
 
 
 # How to Run the Application
