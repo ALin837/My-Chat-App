@@ -26,6 +26,9 @@ function Register(props) {
                     {
                         username: username,
                         password: password
+                    },
+                    {
+                        withCredentials: true,
                     });
                     if (response.status === 200) {
                       return navigate("/", { replace: true }); // <-- issue imperative redirect

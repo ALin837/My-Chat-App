@@ -26,6 +26,9 @@ function HomePage(props)
                     {
                         username: username,
                         password: password
+                    },
+                    {
+                        withCredentials: true,
                     });
                     if (response.status === 200) {
                         const accessToken = response.data.token;
