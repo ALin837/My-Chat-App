@@ -5,7 +5,7 @@ const app = express(); // initializes an express server
 const port =  process.env.PORT || 9000;
 const {createAndAddUser, getUser, deleteUser, getUsers, containUser} = require('./utils/users')
 const server = http.createServer(app);
-const allowedOrigins = require('../api/config/allowed')
+const allowedOrigins = require('./config/allowed')
 const io = new Server(server, {
 	cors: {
 		origin: allowedOrigins,
