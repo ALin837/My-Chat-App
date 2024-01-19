@@ -1,12 +1,12 @@
 var express = require('express');
 const dbo = require('../utils/conn')
 const CONSTANTS = require('../utils/constants')
-const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 var router = express.Router();
 
 router.post('/user', async (req, res) => {
     const dbConnect = dbo.getDb();  
-    const encryptedPassword =  await bcrypt.hash(req.body.password, CONSTANTS.SALT_ROUNDS);
+    const encryptedPassword =  await bcryptjs.hash(req.body.password, CONSTANTS.SALT_ROUNDS);
     const matchUser = {
       username: req.body.username,
       password: encryptedPassword,
