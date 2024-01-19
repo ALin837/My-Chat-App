@@ -2,7 +2,7 @@ var express = require('express');
 const path = require('path');
 const dbo = require('../utils/conn')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 var router = express.Router();
 require('dotenv').config();
 
@@ -26,7 +26,7 @@ router.post('/user', async (req, response) => {
         response.status(401).send("Login not successful");
       } else {
         if (username == user.username) {
-        bcrypt.compare(password, user.password, (err, res) => {
+          bcryptjs.compare(password, user.password, (err, res) => {
             if (!res) {
               response.status(401).send("Username/Passwords may be incorrect");
             } else {
