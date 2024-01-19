@@ -9,7 +9,7 @@ const allowedOrigins = require('../api/config/allowed')
 const io = new Server(server, {
 	cors: {
 		origin: allowedOrigins,
-		methods: ["GET", "POST"],
+		methods: ["GET", "POST", "OPTIONS"],
 	},
 });
 
@@ -57,6 +57,9 @@ app.get("/",(req, res) => {
     res.json("Hello")
 })
 // Routes
+app.options('/api/*', (req, res) => {
+    res.status(200).send();
+});
 app.use('/api/register', register)
 app.use('/api/refresh', refresh)
 app.use('/api/logout', logout)
