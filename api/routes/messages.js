@@ -7,7 +7,7 @@ router.post('/',  async (req, response) => {
     response.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
     response.setHeader("Access-Control-Allow-Credentials", "true");
     response.setHeader("Access-Control-Max-Age", "1800");
-    response.setHeader("Access-Control-Allow-Headers", "content-type");
+    response.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");
     const dbConnect = dbo.getDb();  
     const message = {
         sender: req.body.sender, // will be by id of the sender
@@ -32,7 +32,7 @@ router.get('/:chatId',  async (req, response) => {
     response.setHeader("Access-Control-Allow-Origin", 'https://mychatapp-xqyr.onrender.com')
     response.setHeader("Access-Control-Allow-Credentials", "true");
     response.setHeader("Access-Control-Max-Age", "1800");
-    response.setHeader("Access-Control-Allow-Headers", "content-type");
+    response.setHeader("Access-Control-Allow-Headers", "content-type, Authorization");
     console.log(req.params.chatId);
     const dbConnect = dbo.getDb();  
     try {
