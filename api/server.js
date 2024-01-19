@@ -10,6 +10,8 @@ const io = new Server(server, {
 	cors: {
 		origin: allowedOrigins,
 		methods: ["GET", "POST", "OPTIONS"],
+        credentials: true, // Include credentials such as cookies
+        allowedHeaders: ["Content-Type", "Authorization"], // Add the necessary headers
 	},
 });
 
