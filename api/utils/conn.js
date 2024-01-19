@@ -7,19 +7,16 @@ const client = new MongoClient(connectionString, {
 });
 
 let dbConnection;
-
+let conn;
 module.exports = {
-  connectToServer: function (callback) {
-    client.connect(function (err, db) {
-      if (err || !db) {
-        return callback(err);
-      }
-
-      dbConnection = db.db("my-chat-app");
+  connectToServer : async () => {
+    try {
+      conn = await client.connect()
       console.log("Successfully connected to MongoDB.");
-
-      return callback();
-    });
+    } catch (e) {
+      console.log("Connect failed " + e.message )
+    }
+    dbConnection = conn.db("my-chat-app");
   },
 
   getDb: function () {
