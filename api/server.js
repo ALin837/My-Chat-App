@@ -35,6 +35,10 @@ const authenticate = require("./middleware/authenticate")
 const allow = require("./middleware/allow")
 // cors
 // use cors
+app.use(cors({
+    origin:  'https://mychatapp-xqyr.onrender.com'
+}
+))
 app.use(allow)
 app.use(cors(corsOptions))
 
