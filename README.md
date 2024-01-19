@@ -4,6 +4,12 @@ The application supports user authentication with access and refresh tokens. Add
 using React while the backend is built using Node.js, Express.js, and Socket.io. Furthurmore, I used MongoDB as 
 my database to store conversations and messages.
 
+
+
+
+https://github.com/ALin837/My-Chat-App/assets/77423271/aab38dd8-99ee-428a-b0d4-ce93e21373a9
+
+
 # How to Run the Application
 Clone the repository and in a terminal run
 ```
